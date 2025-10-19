@@ -1,0 +1,171 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Updated color palette with Vietnamese cultural colors - soft reds, golds, greens, and purples */
+  --background: #faf8f5;
+  --foreground: #3d2f2a;
+  --card: #fefdfb;
+  --card-foreground: #3d2f2a;
+  --popover: #fefdfb;
+  --popover-foreground: #3d2f2a;
+  --primary: #d4a5a5;
+  --primary-foreground: #faf8f5;
+  --secondary: #a8c9b8;
+  --secondary-foreground: #3d2f2a;
+  --muted: #e8dcd5;
+  --muted-foreground: #6b5a52;
+  --accent: #c9b8d4;
+  --accent-foreground: #3d2f2a;
+  --destructive: #d97706;
+  --destructive-foreground: #faf8f5;
+  --border: #e8dcd5;
+  --input: #fefdfb;
+  --ring: #d4a5a5;
+  --chart-1: #d4a5a5;
+  --chart-2: #a8c9b8;
+  --chart-3: #c9b8d4;
+  --chart-4: #f0d4b8;
+  --chart-5: #b8d4e8;
+  --radius: 1.5rem;
+  --sidebar: #faf8f5;
+  --sidebar-foreground: #3d2f2a;
+  --sidebar-primary: #d4a5a5;
+  --sidebar-primary-foreground: #faf8f5;
+  --sidebar-accent: #a8c9b8;
+  --sidebar-accent-foreground: #3d2f2a;
+  --sidebar-border: #e8dcd5;
+  --sidebar-ring: #d4a5a5;
+}
+
+.dark {
+  --background: oklch(0.08 0.01 280);
+  --foreground: oklch(0.98 0.01 280);
+  --card: oklch(0.12 0.02 280);
+  --card-foreground: oklch(0.98 0.01 280);
+  --popover: oklch(0.12 0.02 280);
+  --popover-foreground: oklch(0.98 0.01 280);
+  --primary: oklch(0.65 0.28 320);
+  --primary-foreground: oklch(0.08 0.01 280);
+  --secondary: oklch(0.18 0.03 280);
+  --secondary-foreground: oklch(0.98 0.01 280);
+  --muted: oklch(0.25 0.02 280);
+  --muted-foreground: oklch(0.75 0.05 280);
+  --accent: oklch(0.72 0.25 340);
+  --accent-foreground: oklch(0.08 0.01 280);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.98 0.01 280);
+  --border: oklch(0.2 0.02 280);
+  --input: oklch(0.15 0.02 280);
+  --ring: oklch(0.65 0.28 320);
+  --chart-1: oklch(0.65 0.28 320);
+  --chart-2: oklch(0.72 0.25 340);
+  --chart-3: oklch(0.7 0.22 350);
+  --chart-4: oklch(0.68 0.26 330);
+  --chart-5: oklch(0.75 0.24 325);
+  --sidebar: oklch(0.1 0.01 280);
+  --sidebar-foreground: oklch(0.98 0.01 280);
+  --sidebar-primary: oklch(0.65 0.28 320);
+  --sidebar-primary-foreground: oklch(0.08 0.01 280);
+  --sidebar-accent: oklch(0.72 0.25 340);
+  --sidebar-accent-foreground: oklch(0.08 0.01 280);
+  --sidebar-border: oklch(0.2 0.02 280);
+  --sidebar-ring: oklch(0.65 0.28 320);
+}
+
+@theme inline {
+  --font-sans: "Geist", "Geist Fallback";
+  --font-mono: "Geist Mono", "Geist Mono Fallback";
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    /* Vietnamese-inspired background with soft reds, golds, greens, and lotus motifs */
+    background-color: #faf8f5;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' result='noise' /%3E%3CfeColorMatrix in='noise' type='saturate' values='0.1' /%3E%3C/filter%3E%3Crect width='400' height='400' fill='%23faf8f5' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E"),
+      /* Vintage dot pattern with Vietnamese colors - soft red, gold, green */
+      url("data:image/svg+xml,%3Csvg width='80' height='80' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='15' cy='15' r='1.5' fill='%23d4a5a5' opacity='0.12'/%3E%3Ccircle cx='50' cy='50' r='1' fill='%23a8c9b8' opacity='0.1'/%3E%3Ccircle cx='40' cy='20' r='1.2' fill='%23c9b8d4' opacity='0.09'/%3E%3Ccircle cx='70' cy='70' r='1' fill='%23e8c9a0' opacity='0.11'/%3E%3Ccircle cx='25' cy='60' r='1.3' fill='%23d4a5a5' opacity='0.08'/%3E%3C/svg%3E"),
+      /* Lotus flower motifs - subtle, scattered throughout */
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 1400 900' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3CradialGradient id='lotus1' cx='50%25' cy='50%25'%3E%3Cstop offset='0%25' style='stop-color:%23d4a5a5;stop-opacity:0.08' /%3E%3Cstop offset='70%25' style='stop-color:%23e8c9a0;stop-opacity:0.04' /%3E%3Cstop offset='100%25' style='stop-color:%23faf8f5;stop-opacity:0' /%3E%3C/radialGradient%3E%3CradialGradient id='lotus2' cx='50%25' cy='50%25'%3E%3Cstop offset='0%25' style='stop-color:%23a8c9b8;stop-opacity:0.07' /%3E%3Cstop offset='70%25' style='stop-color:%23c9b8d4;stop-opacity:0.03' /%3E%3Cstop offset='100%25' style='stop-color:%23faf8f5;stop-opacity:0' /%3E%3C/radialGradient%3E%3C/defs%3E%3C!-- Layered gradient blobs with Vietnamese colors: soft red, gold, green, purple --%3E%3Ccircle cx='200' cy='150' r='220' fill='url(%23lotus1)' /%3E%3Ccircle cx='1100' cy='700' r='280' fill='url(%23lotus2)' /%3E%3Ccircle cx='700' cy='400' r='200' fill='%23c9b8d4' opacity='0.06' /%3E%3Ccircle cx='300' cy='600' r='150' fill='%23e8c9a0' opacity='0.05' /%3E%3Ccircle cx='1000' cy='200' r='180' fill='%23a8c9b8' opacity='0.04' /%3E%3C!-- Wavy paths inspired by Vietnamese silk patterns --%3E%3Cpath d='M 0 0 Q 350 80 700 40 T 1400 80 L 1400 0 Z' fill='%23d4a5a5' opacity='0.05' /%3E%3Cpath d='M 0 900 Q 350 820 700 870 T 1400 820 L 1400 900 Z' fill='%23a8c9b8' opacity='0.04' /%3E%3Cpath d='M 0 450 Q 350 420 700 460 T 1400 440 L 1400 470 Z' fill='%23e8c9a0' opacity='0.03' /%3E%3C/svg%3E"),
+      /* Subtle Vietnamese silk-inspired pattern */
+      url("data:image/svg+xml,%3Csvg width='120' height='120' xmlns='http://www.w3.org/2000/svg'%3E%3Cline x1='0' y1='0' x2='120' y2='120' stroke='%23d4a5a5' stroke-width='0.5' opacity='0.04'/%3E%3Cline x1='120' y1='0' x2='0' y2='120' stroke='%23a8c9b8' stroke-width='0.5' opacity='0.03'/%3E%3Cline x1='60' y1='0' x2='60' y2='120' stroke='%23e8c9a0' stroke-width='0.3' opacity='0.03'/%3E%3Cline x1='0' y1='60' x2='120' y2='60' stroke='%23c9b8d4' stroke-width='0.3' opacity='0.02'/%3E%3C/svg%3E"),
+      /* Soft gradient overlay with Vietnamese cultural colors */
+      linear-gradient(
+        135deg,
+        rgba(250, 248, 245, 0.7) 0%,
+        rgba(232, 201, 160, 0.3) 15%,
+        rgba(212, 165, 165, 0.25) 30%,
+        rgba(168, 201, 184, 0.2) 50%,
+        rgba(201, 184, 212, 0.22) 70%,
+        rgba(232, 201, 160, 0.15) 85%,
+        rgba(250, 248, 245, 0.6) 100%
+      );
+
+    background-attachment: fixed;
+    background-size: auto, 80px 80px, 1400px 900px, 120px 120px, 100% 100%;
+    background-position: 0 0, 0 0, 0 0, 0 0, 0 0;
+    background-repeat: repeat, repeat, no-repeat, repeat, no-repeat;
+  }
+
+  @keyframes float-bg {
+    0%,
+    100% {
+      background-position: 0 0, 0 0, 0 0, 0 0, 0 0;
+    }
+    25% {
+      background-position: 0 0, 15px 15px, 25px 15px, 8px 8px, 0 0;
+    }
+    50% {
+      background-position: 0 0, 30px 30px, 50px 30px, 15px 15px, 0 0;
+    }
+    75% {
+      background-position: 0 0, 15px 15px, 25px 15px, 8px 8px, 0 0;
+    }
+  }
+
+  body {
+    animation: float-bg 40s ease-in-out infinite;
+  }
+}
