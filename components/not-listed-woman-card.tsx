@@ -29,16 +29,38 @@ export default function NotListedWomanCard() {
           >
             <div className="w-24 h-24 mb-4 flex items-center justify-center">
               {/* Placeholder SVG for anonymous woman */}
-              <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg
+                width="80"
+                height="80"
+                viewBox="0 0 80 80"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
                 <ellipse cx="40" cy="28" rx="16" ry="16" fill="#F8BBD0" />
                 <ellipse cx="40" cy="60" rx="22" ry="14" fill="#F3E5F5" />
-                <rect x="32" y="44" width="16" height="18" rx="8" fill="#CE93D8" />
+                <rect
+                  x="32"
+                  y="44"
+                  width="16"
+                  height="18"
+                  rx="8"
+                  fill="#CE93D8"
+                />
                 <ellipse cx="40" cy="28" rx="8" ry="8" fill="#BA68C8" />
-                <path d="M32 60 Q40 68 48 60" stroke="#BA68C8" strokeWidth="2" fill="none" />
+                <path
+                  d="M32 60 Q40 68 48 60"
+                  stroke="#BA68C8"
+                  strokeWidth="2"
+                  fill="none"
+                />
               </svg>
             </div>
-            <h3 className="text-lg font-medium text-foreground mb-1 tracking-wide">I'm a woman but not listed?</h3>
-            <p className="text-xs text-muted-foreground font-light tracking-widest uppercase">Click to flip</p>
+            <h3 className="text-lg font-medium text-foreground mb-1 tracking-wide">
+              I'm a woman but not listed?
+            </h3>
+            <p className="text-xs text-muted-foreground font-light tracking-widest uppercase">
+              Click to flip
+            </p>
           </div>
           {/* Back Side */}
           <div
@@ -51,12 +73,30 @@ export default function NotListedWomanCard() {
           >
             <div className="w-20 h-20 mb-4 flex items-center justify-center">
               {/* Question mark SVG */}
-              <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg
+                width="48"
+                height="48"
+                viewBox="0 0 48 48"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
                 <circle cx="24" cy="24" r="22" fill="#F8BBD0" />
-                <text x="24" y="32" textAnchor="middle" fontSize="28" fill="#BA68C8" fontFamily="Arial">?</text>
+                <text
+                  x="24"
+                  y="32"
+                  textAnchor="middle"
+                  fontSize="28"
+                  fill="#BA68C8"
+                  fontFamily="Arial"
+                >
+                  ?
+                </text>
               </svg>
             </div>
-            <p className="text-base text-foreground text-center px-4 font-semibold">Have you tried applying to Hoasen, contacting the CEO, or getting past the interview?</p>
+            <p className="text-base text-foreground text-center px-4 font-semibold">
+              Have you tried applying to Hoasen, contacting the CEO, or getting
+              past the interview?
+            </p>
           </div>
         </div>
       </div>
