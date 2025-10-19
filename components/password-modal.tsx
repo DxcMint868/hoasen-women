@@ -64,19 +64,19 @@ export default function PasswordModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md bg-white border-2 border-white/50 shadow-xl">
         <DialogHeader>
-          <DialogTitle className="text-purple-900">Welcome, {woman.name}</DialogTitle>
+          <DialogTitle className="text-foreground">Welcome, {woman.name}</DialogTitle>
         </DialogHeader>
 
         <div className="space-y-6">
-          <p className="text-sm text-purple-700">
+          <p className="text-sm text-muted-foreground">
             Enter the password from your lotus plant envelope to unlock your gift.
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="password" className="text-purple-900">
+              <Label htmlFor="password" className="text-foreground">
                 Password
               </Label>
               <Input
@@ -86,20 +86,20 @@ export default function PasswordModal({
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 disabled={isLoading}
-                className="border-purple-200 focus:border-purple-500 focus:ring-purple-500"
+                className="border-primary/30 focus:border-primary focus:ring-primary"
               />
             </div>
 
             {error && (
-              <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
-                <p className="text-sm text-red-700">{error}</p>
+              <div className="p-3 bg-destructive/10 border border-destructive/30 rounded-lg">
+                <p className="text-sm text-destructive">{error}</p>
               </div>
             )}
 
             <Button
               type="submit"
               disabled={isLoading || !password}
-              className="w-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white"
+              className="w-full bg-[#9470DC] hover:bg-[#7d5fc4] text-white"
             >
               {isLoading ? "Verifying..." : "Unlock Gift"}
             </Button>

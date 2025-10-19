@@ -63,22 +63,22 @@ export default function AdminDashboard({ women }: { women: Woman[] }) {
   return (
     <>
       {/* Header */}
-      <header className="border-b border-purple-100 bg-white/80 backdrop-blur-sm sticky top-0 z-50">
+      <header className="border-b border-primary/20 bg-background/95 backdrop-blur-sm sticky top-0 z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-600 to-purple-700 flex items-center justify-center">
-                <span className="text-white font-bold text-lg">🌸</span>
+              <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center shadow-lg shadow-primary/30">
+                <span className="text-primary-foreground font-bold text-lg">🪷</span>
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-purple-900">Hoasen Admin</h1>
-                <p className="text-xs text-purple-600">Women's Day Celebration 2024</p>
+                <h1 className="text-2xl font-bold text-foreground">Hoasen Admin</h1>
+                <p className="text-xs text-muted-foreground">Women's Day Celebration 2024</p>
               </div>
             </div>
             <Button
               onClick={handleLogout}
               variant="outline"
-              className="border-purple-200 hover:bg-purple-50 text-purple-900 bg-transparent"
+              className="border-primary/40 hover:bg-primary/10 text-foreground bg-transparent"
             >
               <LogOut className="w-4 h-4 mr-2" />
               Logout
@@ -91,53 +91,53 @@ export default function AdminDashboard({ women }: { women: Woman[] }) {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-          <Card className="border-purple-200">
+          <Card className="border-2 border-primary/40 bg-card/80 backdrop-blur-sm">
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-purple-900">Total Women</CardTitle>
+              <CardTitle className="text-sm font-medium text-foreground">Total Women</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-purple-600">{totalCount}</div>
-              <p className="text-xs text-purple-600 mt-1">Registered participants</p>
+              <div className="text-3xl font-bold text-primary">{totalCount}</div>
+              <p className="text-xs text-muted-foreground mt-1">Registered participants</p>
             </CardContent>
           </Card>
 
-          <Card className="border-purple-200">
+          <Card className="border-2 border-secondary/40 bg-card/80 backdrop-blur-sm">
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-purple-900">Rewards Claimed</CardTitle>
+              <CardTitle className="text-sm font-medium text-foreground">Rewards Claimed</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-green-600">{claimedCount}</div>
-              <p className="text-xs text-purple-600 mt-1">{claimRate}% claim rate</p>
+              <div className="text-3xl font-bold text-secondary">{claimedCount}</div>
+              <p className="text-xs text-muted-foreground mt-1">{claimRate}% claim rate</p>
             </CardContent>
           </Card>
 
-          <Card className="border-purple-200">
+          <Card className="border-2 border-accent/40 bg-card/80 backdrop-blur-sm">
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-purple-900">Pending Claims</CardTitle>
+              <CardTitle className="text-sm font-medium text-foreground">Pending Claims</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-orange-600">{totalCount - claimedCount}</div>
-              <p className="text-xs text-purple-600 mt-1">Awaiting redemption</p>
+              <div className="text-3xl font-bold text-destructive">{totalCount - claimedCount}</div>
+              <p className="text-xs text-muted-foreground mt-1">Awaiting redemption</p>
             </CardContent>
           </Card>
         </div>
 
         {/* Women Profiles Table */}
-        <Card className="border-purple-200 shadow-lg">
+        <Card className="border-2 border-primary/40 shadow-lg bg-card/80 backdrop-blur-sm">
           <CardHeader>
-            <CardTitle className="text-purple-900">Women Profiles & Redemption Status</CardTitle>
+            <CardTitle className="text-foreground">Women Profiles & Redemption Status</CardTitle>
             <CardDescription>Track redemption codes and claim status for all participants</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="overflow-x-auto">
               <Table>
                 <TableHeader>
-                  <TableRow className="border-purple-100 hover:bg-purple-50">
-                    <TableHead className="text-purple-900">Name</TableHead>
-                    <TableHead className="text-purple-900">Redemption Code</TableHead>
-                    <TableHead className="text-purple-900">Status</TableHead>
-                    <TableHead className="text-purple-900">Wallet Address</TableHead>
-                    <TableHead className="text-purple-900">Claimed At</TableHead>
+                  <TableRow className="border-primary/20 hover:bg-primary/5">
+                    <TableHead className="text-foreground">Name</TableHead>
+                    <TableHead className="text-foreground">Redemption Code</TableHead>
+                    <TableHead className="text-foreground">Status</TableHead>
+                    <TableHead className="text-foreground">Wallet Address</TableHead>
+                    <TableHead className="text-foreground">Claimed At</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -146,10 +146,10 @@ export default function AdminDashboard({ women }: { women: Woman[] }) {
                     const isClaimed = redemption?.usdt_claimed
 
                     return (
-                      <TableRow key={woman.id} className="border-purple-100 hover:bg-purple-50">
-                        <TableCell className="font-medium text-purple-900">
+                      <TableRow key={woman.id} className="border-primary/20 hover:bg-primary/5">
+                        <TableCell className="font-medium text-foreground">
                           <div className="flex items-center gap-3">
-                            <div className="relative w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
+                            <div className="relative w-8 h-8 rounded-full overflow-hidden flex-shrink-0 border-2 border-primary/30">
                               <Image
                                 src={woman.slack_pfp_url || "/placeholder.svg"}
                                 alt={woman.name}
@@ -162,44 +162,44 @@ export default function AdminDashboard({ women }: { women: Woman[] }) {
                         </TableCell>
                         <TableCell>
                           <div className="flex items-center gap-2">
-                            <code className="text-xs font-mono bg-purple-50 px-2 py-1 rounded border border-purple-200">
+                            <code className="text-xs font-mono bg-muted px-2 py-1 rounded border border-primary/30">
                               {redemption?.phuc_long_code.slice(0, 12)}...
                             </code>
                             <button
                               onClick={() => handleCopyCode(redemption?.phuc_long_code || "")}
-                              className="p-1 hover:bg-purple-100 rounded transition-colors"
+                              className="p-1 hover:bg-primary/10 rounded transition-colors"
                               title="Copy code"
                             >
-                              <Copy className="w-4 h-4 text-purple-600" />
+                              <Copy className="w-4 h-4 text-primary" />
                             </button>
                             {copiedCode === redemption?.phuc_long_code && (
-                              <span className="text-xs text-green-600">Copied!</span>
+                              <span className="text-xs text-secondary">Copied!</span>
                             )}
                           </div>
                         </TableCell>
                         <TableCell>
                           {isClaimed ? (
-                            <Badge className="bg-green-100 text-green-800 hover:bg-green-100 flex w-fit gap-1">
+                            <Badge className="bg-secondary/20 text-secondary-foreground hover:bg-secondary/20 flex w-fit gap-1 border border-secondary/40">
                               <CheckCircle2 className="w-3 h-3" />
                               Claimed
                             </Badge>
                           ) : (
-                            <Badge className="bg-orange-100 text-orange-800 hover:bg-orange-100 flex w-fit gap-1">
+                            <Badge className="bg-destructive/20 text-destructive hover:bg-destructive/20 flex w-fit gap-1 border border-destructive/40">
                               <Clock className="w-3 h-3" />
                               Pending
                             </Badge>
                           )}
                         </TableCell>
-                        <TableCell className="text-sm text-purple-700">
+                        <TableCell className="text-sm text-muted-foreground">
                           {redemption?.wallet_address ? (
-                            <code className="text-xs bg-purple-50 px-2 py-1 rounded border border-purple-200">
+                            <code className="text-xs bg-muted px-2 py-1 rounded border border-primary/30">
                               {redemption.wallet_address.slice(0, 10)}...
                             </code>
                           ) : (
-                            <span className="text-purple-400">-</span>
+                            <span className="text-muted-foreground/50">-</span>
                           )}
                         </TableCell>
-                        <TableCell className="text-sm text-purple-700">
+                        <TableCell className="text-sm text-muted-foreground">
                           {redemption?.claimed_at ? (
                             new Date(redemption.claimed_at).toLocaleDateString("en-US", {
                               month: "short",
@@ -209,7 +209,7 @@ export default function AdminDashboard({ women }: { women: Woman[] }) {
                               minute: "2-digit",
                             })
                           ) : (
-                            <span className="text-purple-400">-</span>
+                            <span className="text-muted-foreground/50">-</span>
                           )}
                         </TableCell>
                       </TableRow>
@@ -223,9 +223,9 @@ export default function AdminDashboard({ women }: { women: Woman[] }) {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-purple-100 bg-white/50 backdrop-blur-sm mt-24">
+      <footer className="border-t border-primary/20 bg-background/80 backdrop-blur-sm mt-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center">
-          <p className="text-sm text-purple-600">Hoasen Admin Dashboard • Women's Day Celebration 2024</p>
+          <p className="text-sm text-muted-foreground">Hoasen Admin Dashboard • Women's Day Celebration 2024</p>
         </div>
       </footer>
     </>

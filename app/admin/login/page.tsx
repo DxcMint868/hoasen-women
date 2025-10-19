@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { AlertCircle } from "lucide-react"
+import SiteFooter from "@/components/site-footer"
 
 export default function AdminLoginPage() {
   const [password, setPassword] = useState("")
@@ -47,22 +48,23 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-purple-50 flex items-center justify-center px-4">
-      <Card className="w-full max-w-md border-purple-200 shadow-lg">
+    <main className="min-h-screen bg-[#9470DC] flex flex-col">
+      <div className="flex-1 flex items-center justify-center px-4">
+        <Card className="w-full max-w-md border-2 border-white/30 shadow-lg bg-white/95 backdrop-blur-sm">
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">
-            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-600 to-purple-700 flex items-center justify-center">
+            <div className="w-12 h-12 rounded-full bg-[#9470DC] flex items-center justify-center shadow-lg shadow-black/20">
               <span className="text-white font-bold text-xl">🌸</span>
             </div>
           </div>
-          <CardTitle className="text-2xl text-purple-900">Admin Portal</CardTitle>
+          <CardTitle className="text-2xl text-foreground">Admin Portal</CardTitle>
           <CardDescription>Hoasen Women's Day 2024</CardDescription>
         </CardHeader>
 
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="password" className="text-purple-900">
+              <Label htmlFor="password" className="text-foreground">
                 Admin Password
               </Label>
               <Input
@@ -72,27 +74,30 @@ export default function AdminLoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 disabled={isLoading}
-                className="border-purple-200 focus:border-purple-500 focus:ring-purple-500"
+                className="border-primary/30 focus:border-primary focus:ring-primary"
               />
             </div>
 
             {error && (
-              <div className="p-3 bg-red-50 border border-red-200 rounded-lg flex gap-2">
-                <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
-                <p className="text-sm text-red-700">{error}</p>
+              <div className="p-3 bg-destructive/10 border border-destructive/30 rounded-lg flex gap-2">
+                <AlertCircle className="w-5 h-5 text-destructive flex-shrink-0 mt-0.5" />
+                <p className="text-sm text-destructive">{error}</p>
               </div>
             )}
 
             <Button
               type="submit"
               disabled={isLoading || !password}
-              className="w-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white"
+              className="w-full bg-[#9470DC] hover:bg-[#7d5fc4] text-white"
             >
               {isLoading ? "Verifying..." : "Login"}
             </Button>
           </form>
         </CardContent>
       </Card>
+      </div>
+
+      <SiteFooter />
     </main>
   )
 }

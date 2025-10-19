@@ -27,7 +27,7 @@ export default async function AdminDashboardPage() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-purple-50">
+    <main className="min-h-screen bg-[#9470DC]">
       <AdminDashboard women={women || []} />
     </main>
   )
