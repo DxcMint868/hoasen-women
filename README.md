@@ -1,1 +1,1 @@
-Found a bug? Fix and push --force to main.
+Found a bug? Fix and push --force to main
