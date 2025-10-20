@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import ProfileGrid from "@/components/profile-grid";
+import AnimatedMeetingHeadline from "@/components/animated-meeting-headline";
 import SiteHeader from "@/components/site-header";
 import SiteFooter from "@/components/site-footer";
 
@@ -33,6 +34,7 @@ export default async function HomePage() {
             innovation and excellence at Hoasen. Click on your card to unlock
             your special gift.
           </p>
+          <AnimatedMeetingHeadline />
         </div>
 
         {isDatabaseNotInitialized ? (

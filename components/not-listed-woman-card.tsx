@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 
 export default function NotListedWomanCard() {
@@ -56,7 +58,7 @@ export default function NotListedWomanCard() {
               </svg>
             </div>
             <h3 className="text-lg font-medium text-foreground mb-1 tracking-wide">
-              I'm a woman but not listed?
+              Not listed?
             </h3>
             <p className="text-xs text-muted-foreground font-light tracking-widest uppercase">
               Click to flip
@@ -94,8 +96,16 @@ export default function NotListedWomanCard() {
               </svg>
             </div>
             <p className="text-base text-foreground text-center px-4 font-semibold">
-              Have you tried applying to Hoasen, contacting the CEO, or getting
-              past the interview?
+              Become a Woman of Hoasen! &nbsp;
+              <a
+                href="https://www.linkedin.com/company/hoasendigital/jobs/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span className="text-muted-foreground">
+                  Apply now & be part of our journey
+                </span>
+              </a>
             </p>
           </div>
         </div>

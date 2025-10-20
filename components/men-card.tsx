@@ -1,6 +1,11 @@
 import { useState } from "react";
 
-export default function MenCard() {
+interface FlipCardProps {
+  frontText: string;
+  backText: string;
+}
+
+export default function FlipCard({ frontText, backText }: FlipCardProps) {
   const [flipped, setFlipped] = useState(false);
   return (
     <div
@@ -50,7 +55,7 @@ export default function MenCard() {
               </svg>
             </div>
             <h3 className="text-lg font-medium text-foreground mb-1 tracking-wide">
-              For men of Hoasen
+              {frontText}
             </h3>
             <p className="text-xs text-muted-foreground font-light tracking-widest uppercase">
               Click to flip
@@ -92,9 +97,10 @@ export default function MenCard() {
               </svg>
             </div>
             <p className="text-base text-foreground text-center px-4 font-semibold">
-              Sorry, this card is for decoration only.
+              {/* Sorry, this card is for decoration only.
               <br />
-              Try again on International Men's Day!
+              Try again on International Men's Day! */}
+              {backText}
             </p>
           </div>
         </div>
