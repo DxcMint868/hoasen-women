@@ -31,6 +31,17 @@ export default function AffirmationModal({
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+  // New: Flower selection state
+  const flowerTypes = [
+    { type: "rose", label: "Rose", emoji: "🌹" },
+    { type: "tulip", label: "Tulip", emoji: "🌷" },
+    { type: "lavender", label: "Lavender", emoji: "🪻" },
+    { type: "sunflower", label: "Sunflower", emoji: "🌻" },
+    { type: "daisy", label: "Daisy", emoji: "🌼" },
+  ];
+  const [flowers, setFlowers] = useState<{ type: string; quantity: number }[]>(
+    []
+  );
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -45,6 +56,7 @@ export default function AffirmationModal({
           womanId,
           senderName,
           message,
+          flowers,
         }),
       });
 
@@ -58,6 +70,7 @@ export default function AffirmationModal({
       setSuccess(true);
       setSenderName("");
       setMessage("");
+      setFlowers([]);
 
       // Auto-close after 2 seconds
       setTimeout(() => {
@@ -101,6 +114,56 @@ export default function AffirmationModal({
               will be displayed on their redemption page.
             </p>
 
+            {/* Flower selection UI */}
+            <div className="space-y-2">
+              <Label className="text-foreground">Send Flowers (optional)</Label>
+              <div className="flex flex-wrap gap-3">
+                {flowerTypes.map((flower) => {
+                  const selected = flowers.find((f) => f.type === flower.type);
+                  return (
+                    <div
+                      key={flower.type}
+                      className="flex items-center gap-2 bg-white/80 rounded-lg px-3 py-2 border border-[#9470DC]/20"
+                    >
+                      <span className="text-2xl">{flower.emoji}</span>
+                      <span className="text-sm font-medium">
+                        {flower.label}
+                      </span>
+                      <input
+                        type="number"
+                        min={0}
+                        max={999}
+                        value={selected?.quantity || 0}
+                        onChange={(e) => {
+                          const qty = Math.max(
+                            0,
+                            parseInt(e.target.value) || 0
+                          );
+                          setFlowers((prev) => {
+                            const others = prev.filter(
+                              (f) => f.type !== flower.type
+                            );
+                            return qty > 0
+                              ? [
+                                  ...others,
+                                  { type: flower.type, quantity: qty },
+                                ]
+                              : others;
+                          });
+                        }}
+                        className="w-14 px-2 py-1 border border-[#9470DC]/30 rounded text-sm text-center"
+                        disabled={isLoading}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+              <p className="text-xs text-muted-foreground">
+                Choose any type and quantity of flowers to send with your
+                affirmation.
+              </p>
+            </div>
+
             <form
               onSubmit={handleSubmit}
               className="space-y-4"
@@ -108,7 +171,8 @@ export default function AffirmationModal({
             >
               <div className="space-y-2">
                 <Label htmlFor="senderName" className="text-foreground">
-                  Your Name <span className="text-muted-foreground">(optional)</span>
+                  Your Name{" "}
+                  <span className="text-muted-foreground">(optional)</span>
                 </Label>
                 <Input
                   id="senderName"

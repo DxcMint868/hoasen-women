@@ -28,7 +28,7 @@ const ANONYMOUS_NAMES = [
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { womanId, senderName, message } = body;
+    const { womanId, senderName, message, flowers } = body;
 
     // Validate inputs
     if (!womanId || !message?.trim()) {
@@ -43,6 +43,17 @@ export async function POST(request: Request) {
         { error: "Message is too long (max 500 characters)" },
         { status: 400 }
       );
+    }
+
+    // Validate flowers (optional)
+    let flowersString = "";
+    if (Array.isArray(flowers) && flowers.length > 0) {
+      flowersString = flowers
+        .filter(
+          (f) => f.type && typeof f.quantity === "number" && f.quantity > 0
+        )
+        .map((f) => `${f.type}|${f.quantity}`)
+        .join(",");
     }
 
     // Use provided name or generate a mysterious one
@@ -66,6 +77,7 @@ export async function POST(request: Request) {
         woman_id: womanId,
         sender_name: finalSenderName,
         message: message.trim(),
+        flowers: flowersString,
       })
       .select()
       .single();

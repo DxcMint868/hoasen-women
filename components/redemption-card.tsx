@@ -157,7 +157,7 @@ export default function RedemptionCard({
   };
 
   return (
-    <div className="relative w-full max-w-4xl mx-auto">
+  <div className="w-full max-w-4xl mx-auto">
       {/* Page Indicators */}
       <div className="flex justify-center gap-2 mb-8">
         {Array.from({ length: totalPages }).map((_, index) => (
@@ -191,7 +191,7 @@ export default function RedemptionCard({
           >
             {/* Page 0: Affirmations */}
             {currentPage === 0 && (
-              <Card className="relative border-2 border-white/50 shadow-2xl backdrop-blur-sm overflow-hidden min-h-[600px]">
+              <Card className="relative border-2 border-white/50 backdrop-blur-sm overflow-hidden min-h-[600px]">
                 <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/95 to-white pointer-events-none" />
                 <CardContent className="relative p-8 sm:p-12">
                   <AffirmationsPage womanId={woman.id} />
@@ -201,7 +201,7 @@ export default function RedemptionCard({
 
             {/* Page 1: Tribute & Welcome */}
             {currentPage === 1 && (
-              <Card className="relative border-2 border-white/50 shadow-2xl backdrop-blur-sm overflow-hidden min-h-[600px]">
+              <Card className="relative border-2 border-white/50 backdrop-blur-sm overflow-hidden min-h-[600px]">
                 <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/95 to-white pointer-events-none" />
                 <CardContent className="relative p-8 sm:p-12">
                   <div className="text-center space-y-8">
@@ -293,7 +293,7 @@ export default function RedemptionCard({
 
             {/* Page 2: USDT Gift */}
             {currentPage === 2 && (
-              <Card className="relative border-2 border-white/50 shadow-2xl backdrop-blur-sm overflow-hidden min-h-[600px]">
+              <Card className="relative border-2 border-white/50 backdrop-blur-sm overflow-hidden min-h-[600px]">
                 <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/95 to-white pointer-events-none" />
                 <CardHeader className="relative text-center pb-4">
                   <div className="flex justify-center mb-4">
@@ -454,7 +454,7 @@ export default function RedemptionCard({
 
             {/* Page 3: NFT Mint with Optional Wish */}
             {currentPage === 3 && (
-              <Card className="relative border-2 border-white/50 shadow-2xl backdrop-blur-sm overflow-hidden min-h-[600px]">
+              <Card className="relative border-2 border-white/50 backdrop-blur-sm overflow-hidden min-h-[600px]">
                 <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/95 to-white pointer-events-none" />
 
                 <CardHeader className="relative text-center pb-3">
@@ -786,7 +786,7 @@ export default function RedemptionCard({
 
             {/* Page 4: Feedback & Hearts */}
             {currentPage === 4 && (
-              <Card className="relative border-2 border-white/50 shadow-2xl backdrop-blur-sm overflow-hidden min-h-[600px]">
+              <Card className="relative border-2 border-white/50 backdrop-blur-sm overflow-hidden min-h-[600px]">
                 <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/95 to-white pointer-events-none" />
 
                 {/* Floating Hearts */}
