@@ -62,6 +62,10 @@ export default function RedemptionCard({
   const [floatingHearts, setFloatingHearts] = useState<
     Array<{ id: number; x: number }>
   >([]);
+  const [clickedReactions, setClickedReactions] = useState<Set<string>>(
+    new Set()
+  );
+  const [showEasterEgg, setShowEasterEgg] = useState(false);
 
   const totalPages = 5; // Welcome, Affirmations, USDT, Phuc Long, Feedback
 
@@ -84,6 +88,20 @@ export default function RedemptionCard({
     setTimeout(() => {
       setFloatingHearts((prev) => prev.filter((h) => h.id !== newHeart.id));
     }, 2000);
+  };
+
+  const handleReactionClick = (emoji: string) => {
+    const newClicked = new Set(clickedReactions);
+    newClicked.add(emoji);
+    setClickedReactions(newClicked);
+
+    // Trigger easter egg if 3+ unique reactions
+    if (newClicked.size >= 3 && !showEasterEgg) {
+      setTimeout(() => setShowEasterEgg(true), 300);
+    }
+
+    // Spawn hearts
+    handleHeartClick();
   };
 
   const handleSubmitFeedback = async () => {
@@ -832,6 +850,107 @@ export default function RedemptionCard({
               <Card className="relative border-2 border-white/50 backdrop-blur-sm overflow-hidden min-h-[600px]">
                 <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/95 to-white pointer-events-none" />
 
+                {/* Easter Egg Modal */}
+                <AnimatePresence>
+                  {showEasterEgg && (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="absolute inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
+                      onClick={() => setShowEasterEgg(false)}
+                    >
+                      <motion.div
+                        initial={{ scale: 0, rotate: -180 }}
+                        animate={{ scale: 1, rotate: 0 }}
+                        exit={{ scale: 0, rotate: 180 }}
+                        transition={{ type: "spring", duration: 0.8 }}
+                        className="relative bg-white rounded-3xl p-8 max-w-md shadow-2xl"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        {/* Glitter particles */}
+                        {[...Array(20)].map((_, i) => (
+                          <motion.div
+                            key={i}
+                            initial={{ scale: 0, x: 0, y: 0 }}
+                            animate={{
+                              scale: [0, 1, 0],
+                              x: (Math.random() - 0.5) * 300,
+                              y: (Math.random() - 0.5) * 300,
+                              opacity: [0, 1, 0],
+                            }}
+                            transition={{
+                              duration: 1.5,
+                              delay: i * 0.05,
+                              repeat: Infinity,
+                              repeatDelay: 2,
+                            }}
+                            className="absolute top-1/2 left-1/2 w-2 h-2 bg-yellow-400 rounded-full"
+                            style={{
+                              boxShadow: "0 0 10px rgba(250, 204, 21, 0.8)",
+                            }}
+                          />
+                        ))}
+
+                        <div className="text-center space-y-4 relative z-10">
+                          <motion.div
+                            animate={{ rotate: [0, 10, -10, 0] }}
+                            transition={{
+                              duration: 0.5,
+                              repeat: Infinity,
+                              repeatDelay: 2,
+                            }}
+                            className="text-5xl mb-4"
+                          >
+                            🎉
+                          </motion.div>
+
+                          <h3 className="text-2xl font-bold text-purple-900">
+                            Hidden Gem Discovered!
+                          </h3>
+
+                          {/* AI-gen image */}
+                          <div className="relative w-64 h-64 mx-auto my-6 rounded-2xl overflow-hidden border-4 border-purple-300 shadow-xl">
+                            <Image
+                              src={`/easter-egg/${woman.id}.png`}
+                              alt="Special AI-generated celebration"
+                              fill
+                              className="object-cover"
+                            />
+                          </div>
+
+                          <p className="text-gray-700 leading-relaxed">
+                            You found the secret by reacting with 3+ emojis!
+                          </p>
+                          <p className="text-sm text-gray-600">
+                            This special image was crafted by Hoasen's superb AI
+                            agent working tirelessly to cheer you up.
+                          </p>
+                          <p className="text-lg font-semibold text-purple-600">
+                            Happy Women's Day! 💜
+                          </p>
+
+                          <div className="flex gap-3 justify-center pt-4">
+                            <a
+                              href={`/easter-egg/${woman.id}.png`}
+                              download={`hoasen-womensday-${woman.name}.png`}
+                              className="px-5 py-2.5 bg-purple-500 hover:bg-purple-600 text-white font-medium rounded-lg transition-colors"
+                            >
+                              Download
+                            </a>
+                            <button
+                              onClick={() => setShowEasterEgg(false)}
+                              className="px-5 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-lg transition-colors"
+                            >
+                              Close
+                            </button>
+                          </div>
+                        </div>
+                      </motion.div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
                 {/* Floating Hearts */}
                 <div className="absolute inset-0 pointer-events-none overflow-hidden">
                   <AnimatePresence>
@@ -948,8 +1067,14 @@ export default function RedemptionCard({
                             key={index}
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.9 }}
-                            onClick={handleHeartClick}
-                            className={`w-14 h-14 rounded-full bg-gradient-to-br ${reaction.color} flex items-center justify-center text-2xl shadow-lg hover:shadow-xl transition-all`}
+                            onClick={() => handleReactionClick(reaction.icon)}
+                            className={`w-14 h-14 rounded-full bg-gradient-to-br ${
+                              reaction.color
+                            } flex items-center justify-center text-2xl shadow-lg hover:shadow-xl transition-all ${
+                              clickedReactions.has(reaction.icon)
+                                ? "ring-4 ring-white ring-offset-2"
+                                : ""
+                            }`}
                           >
                             {reaction.icon}
                           </motion.button>

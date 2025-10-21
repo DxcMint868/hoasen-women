@@ -33,7 +33,7 @@ const personalizations: Record<
     hoverEffect: "bugs",
   },
   "Nhu Nguyen": {
-    title: "Chief Food Officer (& Front-End Engineer)",
+    title: "Front-End Engineer & Chief Food Officer",
     description:
       "The Cá Khô Queen. Her dried fish made it all the way to Bangkok in Meg's suitcase.",
     hoverEffect: "treats",
