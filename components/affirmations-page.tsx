@@ -59,62 +59,111 @@ export default function AffirmationsPage({ womanId }: { womanId: string }) {
           <motion.svg
             initial={{ scale: 0.7, rotate: -10 }}
             animate={{ scale: 1, rotate: 0 }}
-            transition={{ duration: 1, repeat: Infinity, repeatType: "reverse" }}
+            transition={{
+              duration: 1,
+              repeat: Infinity,
+              repeatType: "reverse",
+            }}
             viewBox="0 0 128 128"
             className="absolute inset-0 w-full h-full"
           >
             {/* Rose */}
             <motion.circle
-              cx="64" cy="40" r="18"
+              cx="64"
+              cy="40"
+              r="18"
               fill="#F8BBD0"
               initial={{ scale: 0.8 }}
               animate={{ scale: [1, 1.1, 1] }}
-              transition={{ duration: 1.2, repeat: Infinity, repeatType: "reverse", delay: 0 }}
+              transition={{
+                duration: 1.2,
+                repeat: Infinity,
+                repeatType: "reverse",
+                delay: 0,
+              }}
             />
             {/* Tulip */}
             <motion.ellipse
-              cx="32" cy="80" rx="12" ry="18"
+              cx="32"
+              cy="80"
+              rx="12"
+              ry="18"
               fill="#FFD54F"
               initial={{ scale: 0.8 }}
               animate={{ scale: [1, 1.1, 1] }}
-              transition={{ duration: 1.2, repeat: Infinity, repeatType: "reverse", delay: 0.3 }}
+              transition={{
+                duration: 1.2,
+                repeat: Infinity,
+                repeatType: "reverse",
+                delay: 0.3,
+              }}
             />
             {/* Lavender */}
             <motion.rect
-              x="90" y="70" width="10" height="28" rx="5"
+              x="90"
+              y="70"
+              width="10"
+              height="28"
+              rx="5"
               fill="#CE93D8"
               initial={{ scale: 0.8 }}
               animate={{ scale: [1, 1.1, 1] }}
-              transition={{ duration: 1.2, repeat: Infinity, repeatType: "reverse", delay: 0.6 }}
+              transition={{
+                duration: 1.2,
+                repeat: Infinity,
+                repeatType: "reverse",
+                delay: 0.6,
+              }}
             />
             {/* Sunflower */}
             <motion.circle
-              cx="100" cy="32" r="10"
+              cx="100"
+              cy="32"
+              r="10"
               fill="#FFD700"
               initial={{ scale: 0.8 }}
               animate={{ scale: [1, 1.1, 1] }}
-              transition={{ duration: 1.2, repeat: Infinity, repeatType: "reverse", delay: 0.9 }}
+              transition={{
+                duration: 1.2,
+                repeat: Infinity,
+                repeatType: "reverse",
+                delay: 0.9,
+              }}
             />
             {/* Daisy */}
             <motion.ellipse
-              cx="20" cy="30" rx="8" ry="12"
+              cx="20"
+              cy="30"
+              rx="8"
+              ry="12"
               fill="#FFF9C4"
               initial={{ scale: 0.8 }}
               animate={{ scale: [1, 1.1, 1] }}
-              transition={{ duration: 1.2, repeat: Infinity, repeatType: "reverse", delay: 1.2 }}
+              transition={{
+                duration: 1.2,
+                repeat: Infinity,
+                repeatType: "reverse",
+                delay: 1.2,
+              }}
             />
           </motion.svg>
           {/* Center emoji */}
           <motion.div
             initial={{ opacity: 0, scale: 0.7 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.2, repeat: Infinity, repeatType: "reverse" }}
+            transition={{
+              duration: 1.2,
+              repeat: Infinity,
+              repeatType: "reverse",
+            }}
             className="absolute inset-0 flex items-center justify-center text-4xl"
           >
             💐
           </motion.div>
         </div>
-        <p className="mt-6 text-lg text-[#9470DC] font-medium">Loading affirmations...</p>
+        <p className="mt-6 text-lg text-[#9470DC] font-medium">
+          Loading affirmations...
+        </p>
       </div>
     );
   }
@@ -141,7 +190,7 @@ export default function AffirmationsPage({ womanId }: { womanId: string }) {
             ? "No affirmations yet. Be the first to share one!"
             : `${affirmations.length} beautiful message${
                 affirmations.length !== 1 ? "s" : ""
-              } of love and support from Hoasenners`}
+              } of love and support from Hoasenner colleagues`}
         </p>
       </div>
 
@@ -193,11 +242,17 @@ export default function AffirmationsPage({ womanId }: { womanId: string }) {
                     let flowersArr: { type: string; quantity: number }[] = [];
                     if (Array.isArray(aff.flowers)) {
                       flowersArr = aff.flowers;
-                    } else if (typeof aff.flowers === "string" && aff.flowers.length > 0) {
-                      flowersArr = aff.flowers.split(",").map((pair) => {
-                        const [type, qty] = pair.split("|");
-                        return { type, quantity: Number(qty) };
-                      }).filter(f => f.type && f.quantity > 0);
+                    } else if (
+                      typeof aff.flowers === "string" &&
+                      aff.flowers.length > 0
+                    ) {
+                      flowersArr = aff.flowers
+                        .split(",")
+                        .map((pair) => {
+                          const [type, qty] = pair.split("|");
+                          return { type, quantity: Number(qty) };
+                        })
+                        .filter((f) => f.type && f.quantity > 0);
                     }
                     return flowersArr.length > 0 ? (
                       <div className="flex flex-wrap gap-2 pt-2">

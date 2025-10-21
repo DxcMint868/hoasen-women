@@ -117,6 +117,7 @@ export default function RedemptionCard({
         body: JSON.stringify({
           redemptionId: redemption?.id,
           walletAddress,
+          womanId: woman.id,
         }),
       });
 
