@@ -187,7 +187,7 @@ export default function AffirmationsPage({ womanId }: { womanId: string }) {
         </h2>
         <p className="text-muted-foreground">
           {affirmations.length === 0
-            ? "No affirmations yet. Be the first to share one!"
+            ? "It's quiet here. It seems that you woke up the earliest, to a serene garden that is yet to bloom."
             : `${affirmations.length} beautiful message${
                 affirmations.length !== 1 ? "s" : ""
               } of love and support from Hoasenner colleagues`}
@@ -300,12 +300,37 @@ export default function AffirmationsPage({ womanId }: { womanId: string }) {
           ))}
         </div>
       ) : (
-        <div className="text-center py-12">
-          <div className="text-4xl mb-3">💌</div>
-          <p className="text-muted-foreground">
-            No affirmations yet. Share one from the profile card to inspire!
-          </p>
-        </div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-center py-16 px-6"
+        >
+          <div className="max-w-md mx-auto space-y-4">
+            <motion.div
+              animate={{
+                rotate: [0, 5, -5, 0],
+                scale: [1, 1.1, 1],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                repeatType: "reverse",
+              }}
+              className="text-6xl mb-4"
+            >
+              �
+            </motion.div>
+            <h3 className="text-xl font-semibold text-foreground">
+              Your Garden of Kindness
+            </h3>
+            <p className="text-muted-foreground leading-relaxed">
+              This space is reserved for heartfelt messages from your
+              colleagues. While it's quiet now, it's ready to bloom with words
+              of appreciation and support. 🌸
+            </p>
+          </div>
+        </motion.div>
       )}
     </div>
   );

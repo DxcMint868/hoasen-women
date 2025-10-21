@@ -26,9 +26,9 @@ export async function POST(request: NextRequest) {
   try {
     const { redemptionId, walletAddress, womanId } = await request.json();
 
-    if (!redemptionId || !walletAddress) {
+    if (!walletAddress || !womanId) {
       return NextResponse.json(
-        { error: "Missing required fields" },
+        { error: "Missing required fields (walletAddress and womanId required)" },
         { status: 400 }
       );
     }
@@ -39,10 +39,6 @@ export async function POST(request: NextRequest) {
         { error: "Invalid wallet address format" },
         { status: 400 }
       );
-    }
-
-    if (!womanId) {
-      return NextResponse.json({ error: "Missing woman ID" }, { status: 400 });
     }
 
     if (!GIFT_MANAGER_ADDRESS || !BACKEND_SIGNER_KEY) {
@@ -65,6 +61,43 @@ export async function POST(request: NextRequest) {
     if (womanError || !woman) {
       console.error("Woman not found:", womanError);
       return NextResponse.json({ error: "Woman not found" }, { status: 404 });
+    }
+
+    // Get or create redemption record
+    let actualRedemptionId = redemptionId;
+    
+    if (!redemptionId) {
+      // Check if redemption exists
+      const { data: existingRedemption } = await supabase
+        .from("redemptions")
+        .select("id")
+        .eq("woman_id", womanId)
+        .single();
+
+      if (existingRedemption) {
+        actualRedemptionId = existingRedemption.id;
+      } else {
+        // Create new redemption record
+        const { data: newRedemption, error: createError } = await supabase
+          .from("redemptions")
+          .insert({
+            woman_id: womanId,
+            usdt_claimed: false,
+            nft_claimed: false,
+          })
+          .select("id")
+          .single();
+
+        if (createError || !newRedemption) {
+          console.error("Failed to create redemption:", createError);
+          return NextResponse.json(
+            { error: "Failed to create redemption record" },
+            { status: 500 }
+          );
+        }
+
+        actualRedemptionId = newRedemption.id;
+      }
     }
 
     // Set up ethers provider and signer (use Base Sepolia for testing, Base for production)
@@ -104,7 +137,7 @@ export async function POST(request: NextRequest) {
         claimed_at: new Date().toISOString(),
         tx_hash: receipt.hash,
       })
-      .eq("id", redemptionId);
+      .eq("id", actualRedemptionId);
 
     if (updateError) {
       console.error("Redemption update error:", updateError);

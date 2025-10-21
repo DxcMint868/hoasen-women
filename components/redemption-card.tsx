@@ -17,16 +17,17 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import AffirmationsPage from "./affirmations-page";
+import KnowledgeTooltip from "./knowledge-tooltip";
 
 interface Woman {
   id: string;
   name: string;
   slack_pfp_url: string;
+  phuc_long_image: string;
 }
 
 interface Redemption {
   id: string;
-  phuc_long_code: string;
   usdt_claimed: boolean;
   nft_claimed: boolean;
   claimed_at: string | null;
@@ -55,14 +56,49 @@ export default function RedemptionCard({
     Array<{ id: number; x: number; delay: number }>
   >([]);
   const [heartCount, setHeartCount] = useState(0);
+  const [giftBoxOpened, setGiftBoxOpened] = useState(false);
+  const [txHash, setTxHash] = useState<string>("");
+  const [isSubmittingFeedback, setIsSubmittingFeedback] = useState(false);
+  const [floatingHearts, setFloatingHearts] = useState<
+    Array<{ id: number; x: number }>
+  >([]);
 
-  const totalPages = 5;
+  const totalPages = 5; // Welcome, Affirmations, USDT, Phuc Long, Feedback
 
   const handleCopyCode = () => {
-    if (redemption?.phuc_long_code) {
-      navigator.clipboard.writeText(redemption.phuc_long_code);
+    if (woman?.phuc_long_image) {
+      navigator.clipboard.writeText(woman.phuc_long_image);
       setCopiedCode(true);
       setTimeout(() => setCopiedCode(false), 2000);
+    }
+  };
+
+  const handleHeartClick = () => {
+    const newHeart = {
+      id: Date.now(),
+      x: Math.random() * 100 - 50,
+    };
+    setFloatingHearts((prev) => [...prev, newHeart]);
+    setHeartCount((prev) => prev + 1);
+
+    setTimeout(() => {
+      setFloatingHearts((prev) => prev.filter((h) => h.id !== newHeart.id));
+    }, 2000);
+  };
+
+  const handleSubmitFeedback = async () => {
+    if (!feedback.trim()) return;
+
+    setIsSubmittingFeedback(true);
+    try {
+      // You can add your feedback submission logic here
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      setFeedback("");
+      // Show success message
+    } catch (error) {
+      console.error("Error submitting feedback:", error);
+    } finally {
+      setIsSubmittingFeedback(false);
     }
   };
 
@@ -100,11 +136,6 @@ export default function RedemptionCard({
     }, 3000);
   };
 
-  const handleSubmitFeedback = async () => {
-    // TODO: Implement feedback submission
-    console.log("Feedback:", feedback);
-  };
-
   const handleClaimReward = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage("");
@@ -130,6 +161,7 @@ export default function RedemptionCard({
       }
 
       setClaimStatus("success");
+      setTxHash(data.txHash || "");
       setWalletAddress("");
     } catch (err) {
       setErrorMessage("An error occurred. Please try again.");
@@ -158,7 +190,7 @@ export default function RedemptionCard({
   };
 
   return (
-  <div className="w-full max-w-4xl mx-auto">
+    <div className="w-full max-w-4xl mx-auto">
       {/* Page Indicators */}
       <div className="flex justify-center gap-2 mb-8">
         {Array.from({ length: totalPages }).map((_, index) => (
@@ -294,12 +326,12 @@ export default function RedemptionCard({
 
             {/* Page 2: USDT Gift */}
             {currentPage === 2 && (
-              <Card className="relative border-2 border-white/50 backdrop-blur-sm overflow-hidden min-h-[600px]">
-                <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/95 to-white pointer-events-none" />
+              <Card className="relative border-2 border-white/50 backdrop-blur-sm overflow-visible min-h-[600px]">
+                <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/95 to-white pointer-events-none rounded-lg" />
                 <CardHeader className="relative text-center pb-4">
                   <div className="flex justify-center mb-4">
                     <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#9470DC]/20 to-[#9470DC]/40 flex items-center justify-center shadow-lg">
-                      <svg
+                      {/* <svg
                         className="w-10 h-10 text-[#9470DC]"
                         fill="none"
                         stroke="currentColor"
@@ -314,14 +346,40 @@ export default function RedemptionCard({
                           strokeWidth="1.7"
                         />
                         <path d="M16 12h.01" strokeWidth="2" />
-                      </svg>
+                      </svg> */}
+                      <Image
+                        src="/rose.png"
+                        alt="Rose"
+                        width={40}
+                        height={40}
+                        className="object-contain"
+                      />
                     </div>
                   </div>
                   <CardTitle className="text-3xl text-foreground">
-                    Gift #1: USDT Reward
+                    LUCKY MONEY -{" "}
+                    <KnowledgeTooltip
+                      term="USDT"
+                      definition="USDT (Tether) is a stablecoin cryptocurrency pegged to the US Dollar. Each USDT token is worth approximately $1 USD, making it stable and predictable unlike Bitcoin or Ethereum."
+                      example="Your 12 USDT = approximately $12 USD that you can use, trade, or convert to regular money anytime."
+                    />{" "}
+                    GIFT
                   </CardTitle>
-                  <CardDescription className="text-base">
-                    Your cryptocurrency gift awaits
+                  <CardDescription className="text-base italic leading-relaxed">
+                    Lady, maybe you expected a red envelope with cash — consider
+                    this Hoasen's modern twist: secure{" "}
+                    <KnowledgeTooltip
+                      term="stablecoin"
+                      definition="A cryptocurrency designed to maintain a stable value by being pegged to a real-world asset like the US Dollar. Unlike Bitcoin or Ethereum that go up and down, stablecoins stay at a consistent price."
+                      example="1 USDT always equals $1 USD in real life, making it perfect for everyday transactions without worrying about price changes."
+                    />{" "}
+                    tokens that live on the{" "}
+                    <KnowledgeTooltip
+                      term="blockchain"
+                      definition="A digital ledger that records transactions across many computers. Think of it like a shared Google Doc that everyone can see, but no one can secretly change or delete."
+                      example="When you receive USDT, it's recorded on the blockchain, and everyone can verify you own it—but only you can spend it with your wallet."
+                    />
+                    .
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="relative space-y-6 px-8 pb-8">
@@ -330,8 +388,13 @@ export default function RedemptionCard({
                       {/* Web3 Wallet Guide */}
                       <div className="bg-blue-50 border-2 border-blue-200 rounded-lg p-6 space-y-4">
                         <h3 className="font-semibold text-blue-900 flex items-center gap-2">
-                          {/* Sparkle icon already replaced above with SVG */}
-                          New to Web3? Here's how to get started:
+                          New to{" "}
+                          <KnowledgeTooltip
+                            term="Web3"
+                            definition="The next generation of the internet where you own your digital assets directly, without relying on banks or companies to hold them for you. It's powered by blockchain technology."
+                            example="Instead of PayPal holding your money, with Web3 you hold your own USDT in your personal wallet—like carrying cash, but digital and global."
+                          />
+                          ? Here's how to get started:
                         </h3>
                         <ul className="space-y-2 text-sm text-blue-800">
                           <li className="flex items-start gap-2">
@@ -343,8 +406,13 @@ export default function RedemptionCard({
                             >
                               <circle cx="4" cy="4" r="3" strokeWidth="1.2" />
                             </svg>
-                            Download a Web3 wallet app (e.g., MetaMask, Trust
-                            Wallet)
+                            Download a{" "}
+                            <KnowledgeTooltip
+                              term="Web3 wallet"
+                              definition="A digital app that stores your cryptocurrency and lets you send or receive it. Think of it as a digital purse that only you can access with your password."
+                              example="MetaMask is a popular wallet app that works like a mobile banking app, but for cryptocurrencies."
+                            />{" "}
+                            app (e.g., MetaMask, Trust Wallet)
                           </li>
                           <li className="flex items-start gap-2">
                             <svg
@@ -367,7 +435,13 @@ export default function RedemptionCard({
                             >
                               <circle cx="4" cy="4" r="3" strokeWidth="1.2" />
                             </svg>
-                            Copy your wallet address (starts with "0x...")
+                            Copy your{" "}
+                            <KnowledgeTooltip
+                              term="wallet address"
+                              definition="Your unique identifier on the blockchain, like an email address but for receiving cryptocurrency. It starts with '0x' and is a long string of letters and numbers."
+                              example="0x742d35C...5f0bEb - this is like your bank account number that others use to send you money."
+                            />{" "}
+                            (starts with "0x...")
                           </li>
                           <li className="flex items-start gap-2">
                             <svg
@@ -403,9 +477,36 @@ export default function RedemptionCard({
                           />
                         </div>
 
+                        {/* Loading animation */}
+                        {isLoading && (
+                          <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            className="p-4 bg-purple-50 border border-purple-200 rounded-lg"
+                          >
+                            <div className="flex flex-col items-center gap-3">
+                              <motion.div
+                                animate={{ rotate: 360 }}
+                                transition={{
+                                  duration: 2,
+                                  repeat: Infinity,
+                                  ease: "linear",
+                                }}
+                                className="w-12 h-12 rounded-full border-4 border-[#9470DC]/30 border-t-[#9470DC]"
+                              />
+                              <p className="text-sm font-medium text-[#9470DC]">
+                                Processing your transaction on the blockchain...
+                              </p>
+                              <p className="text-xs text-muted-foreground text-center">
+                                This may take a few moments. Please don't close
+                                this page.
+                              </p>
+                            </div>
+                          </motion.div>
+                        )}
+
                         {claimStatus === "error" && (
                           <div className="p-3 bg-destructive/10 border border-destructive/30 rounded-lg flex gap-2">
-                            {/* Alert icon already replaced above with SVG */}
                             <p className="text-sm text-destructive">
                               {errorMessage}
                             </p>
@@ -413,12 +514,105 @@ export default function RedemptionCard({
                         )}
 
                         {claimStatus === "success" && (
-                          <div className="p-3 bg-green-50 border border-green-200 rounded-lg flex gap-2">
-                            {/* Check icon already replaced above with SVG */}
-                            <p className="text-sm text-green-700">
-                              USDT claimed successfully! Check your wallet.
-                            </p>
-                          </div>
+                          <motion.div
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            className="space-y-4"
+                          >
+                            <div className="p-4 bg-green-50 border border-green-200 rounded-lg space-y-3">
+                              <div className="flex gap-2">
+                                <svg
+                                  className="w-5 h-5 text-green-600 flex-shrink-0"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M5 13l4 4L19 7"
+                                  />
+                                </svg>
+                                <div className="flex-1">
+                                  <p className="text-sm font-semibold text-green-900">
+                                    Success! 12{" "}
+                                    <KnowledgeTooltip
+                                      term="USDT"
+                                      definition="USDT (Tether) is a stablecoin cryptocurrency pegged to the US Dollar. Each USDT token is worth approximately $1 USD, making it stable and predictable unlike Bitcoin or Ethereum."
+                                      example="Your 12 USDT = approximately $12 USD that you can use, trade, or convert to regular money anytime."
+                                    />{" "}
+                                    sent to your wallet
+                                  </p>
+                                  <p className="text-xs text-green-700 mt-1">
+                                    Your transaction has been confirmed on the
+                                    blockchain.
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+
+                            {/* Transaction link */}
+                            {txHash && (
+                              <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                                <p className="text-xs font-medium text-blue-900 mb-2">
+                                  View your transaction:
+                                </p>
+                                <a
+                                  href={`${
+                                    process.env.NODE_ENV === "production"
+                                      ? "https://basescan.org"
+                                      : "https://sepolia.basescan.org"
+                                  }/tx/${txHash}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-xs text-blue-600 hover:text-blue-800 underline break-all"
+                                >
+                                  {txHash}
+                                </a>
+                              </div>
+                            )}
+
+                            {/* Instructions for checking balance */}
+                            <div className="p-4 bg-purple-50 border border-purple-200 rounded-lg space-y-3">
+                              <h4 className="text-sm font-semibold text-purple-900">
+                                How to check your USDT balance:
+                              </h4>
+                              <ol className="space-y-2 text-xs text-purple-800">
+                                <li className="flex items-start gap-2">
+                                  <span className="font-bold">1.</span>
+                                  <span>Open your MetaMask wallet</span>
+                                </li>
+                                <li className="flex items-start gap-2">
+                                  <span className="font-bold">2.</span>
+                                  <span>
+                                    Click the network dropdown at the top and
+                                    select <strong>"Base"</strong>{" "}
+                                  </span>
+                                </li>
+                                <li className="flex items-start gap-2">
+                                  <span className="font-bold">3.</span>
+                                  <span>
+                                    Click on 'Tokens' tab and scroll down to see
+                                    your USDT token balance (wait few minutes)
+                                  </span>
+                                </li>
+                                <li className="flex items-start gap-2">
+                                  <span className="font-bold">4.</span>
+                                  <span>
+                                    If you don't see USDT, tap "Import tokens"
+                                    and search for USDT on Base network
+                                  </span>
+                                </li>
+                                <li>
+                                  <span className="italic mt-4">
+                                    If you still don't see USDT, contact
+                                    support: minh@hoasen.io (or Slack)
+                                  </span>
+                                </li>
+                              </ol>
+                            </div>
+                          </motion.div>
                         )}
 
                         <Button
@@ -453,333 +647,181 @@ export default function RedemptionCard({
               </Card>
             )}
 
-            {/* Page 3: NFT Mint with Optional Wish */}
+            {/* Page 3: Phuc Long Gift */}
             {currentPage === 3 && (
               <Card className="relative border-2 border-white/50 backdrop-blur-sm overflow-hidden min-h-[600px]">
                 <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/95 to-white pointer-events-none" />
 
-                <CardHeader className="relative text-center pb-3">
+                <CardHeader className="relative text-center pb-4">
                   <div className="flex justify-center mb-3">
-                    <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#9470DC]/20 to-[#9470DC]/40 flex items-center justify-center shadow-lg">
-                      <svg
-                        className="w-8 h-8 text-[#9470DC]"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                        viewBox="0 0 24 24"
-                      >
-                        <rect x="4" y="7" width="16" height="10" rx="5" />
-                        <path d="M4 7l8 6 8-6" />
-                      </svg>
-                    </div>
+                    <div className="text-6xl">☕</div>
                   </div>
-                  <CardTitle className="text-2xl text-foreground">
-                    A Moment Worth Keeping
+                  <CardTitle className="text-3xl text-foreground">
+                    Phúc Long Gift Card
                   </CardTitle>
-                  <CardDescription className="text-sm">
-                    Commemorate this special day on the blockchain
+                  <CardDescription className="text-base text-muted-foreground">
+                    100,000 VND for your caffeine fix
                   </CardDescription>
                 </CardHeader>
 
-                <CardContent className="relative space-y-5 px-8 pb-8">
-                  {!redemption?.nft_claimed ? (
-                    <>
-                      {/* Introduction */}
-                      <div className="text-center space-y-3 py-4">
-                        <p className="text-base text-foreground leading-relaxed">
-                          Today marks a special moment between us and you.
+                <CardContent className="relative space-y-6 px-8 pb-8">
+                  {!giftBoxOpened ? (
+                    <div className="flex-1 flex flex-col items-center justify-center space-y-8 min-h-[450px]">
+                      {/* Message */}
+                      <div className="max-w-md mx-auto space-y-4 text-center">
+                        <p className="text-gray-700 leading-relaxed">
+                          Hey! A beauty like you shouldn't be dehydrated. ✨
                         </p>
-                        <p className="text-sm text-muted-foreground leading-relaxed">
-                          We'd love to create a lasting memory of this
-                          celebration by minting an NFT—a unique digital
-                          keepsake that captures this moment forever.
+                        <p className="text-gray-700 leading-relaxed">
+                          We got you something that'll brighten your day (and
+                          quench your thirst).
                         </p>
-                      </div>
-
-                      {/* Optional Wish Section */}
-                      <div className="space-y-3 p-5 bg-white/50 rounded-xl border border-purple-100/50">
-                        <div className="space-y-2">
-                          <h3 className="text-sm font-medium text-foreground">
-                            A Moment for Reflection
-                          </h3>
-                          <p className="text-xs text-muted-foreground leading-relaxed">
-                            If you'd like, take a quiet moment for yourself.
-                            Perhaps there's something you hope for, or a thought
-                            you'd like to hold onto. You're welcome to write it
-                            here—it's completely optional and entirely yours.
-                          </p>
-                        </div>
-
-                        <Textarea
-                          id="wish"
-                          placeholder="A thought, a hope, a quiet wish... (optional)"
-                          value={feedback}
-                          onChange={(
-                            e: React.ChangeEvent<HTMLTextAreaElement>
-                          ) => setFeedback(e.target.value)}
-                          className="min-h-[100px] resize-none bg-white border-[#9470DC]/20 focus:border-[#9470DC]/40 focus:ring-[#9470DC]/40 text-sm placeholder:text-muted-foreground/60"
-                        />
-
-                        <div className="flex items-start gap-2 pt-1">
-                          <svg
-                            className="w-4 h-4 text-[#9470DC] flex-shrink-0 mt-0.5"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="1.5"
-                            viewBox="0 0 24 24"
-                          >
-                            <rect x="4" y="7" width="16" height="10" rx="5" />
-                            <path d="M4 7l8 6 8-6" />
-                          </svg>
-                          <p className="text-xs text-muted-foreground leading-relaxed">
-                            Your words stay private. Only a unique code that
-                            represents your note—like a fingerprint—is stored.
-                            No one can read the actual words from this code.
-                          </p>
-                        </div>
-                      </div>
-
-                      {/* Two Column Layout for Education */}
-                      <div className="grid md:grid-cols-2 gap-4 pt-2">
-                        {/* What is NFT */}
-                        <div className="space-y-2.5 p-4 bg-gradient-to-br from-blue-50/40 to-transparent rounded-lg border border-blue-100/50">
-                          <div className="flex items-center gap-2 mb-1">
-                            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-blue-500 flex items-center justify-center flex-shrink-0">
-                              <svg
-                                className="w-4 h-4 text-white"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={2}
-                                  d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"
-                                />
-                              </svg>
-                            </div>
-                            <h3 className="font-semibold text-sm text-foreground">
-                              What is an NFT?
-                            </h3>
-                          </div>
-                          <p className="text-xs text-muted-foreground leading-relaxed">
-                            Think of it as a digital keepsake—unique and truly
-                            yours. This NFT is like a certificate that says:
-                          </p>
-                          <ul className="space-y-1.5 text-xs text-muted-foreground pl-1">
-                            <li className="flex items-start gap-2">
-                              <span className="text-blue-500 mt-0.5 font-medium">
-                                •
-                              </span>
-                              <span>This moment belongs to you</span>
-                            </li>
-                            <li className="flex items-start gap-2">
-                              <span className="text-blue-500 mt-0.5 font-medium">
-                                •
-                              </span>
-                              <span>It's stored forever, can't be lost</span>
-                            </li>
-                            <li className="flex items-start gap-2">
-                              <span className="text-blue-500 mt-0.5 font-medium">
-                                •
-                              </span>
-                              <span>There's a surprise hidden inside</span>
-                            </li>
-                          </ul>
-                        </div>
-
-                        {/* Why Blockchain */}
-                        <div className="space-y-2.5 p-4 bg-gradient-to-br from-purple-50/40 to-transparent rounded-lg border border-purple-100/50">
-                          <div className="flex items-center gap-2 mb-1">
-                            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-400 to-purple-500 flex items-center justify-center flex-shrink-0">
-                              <svg
-                                className="w-4 h-4 text-white"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={2}
-                                  d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
-                                />
-                              </svg>
-                            </div>
-                            <h3 className="font-semibold text-sm text-foreground">
-                              Why Blockchain?
-                            </h3>
-                          </div>
-                          <p className="text-xs text-muted-foreground leading-relaxed">
-                            Blockchain is like a special storage system that
-                            keeps your NFT safe:
-                          </p>
-                          <ul className="space-y-1.5 text-xs text-muted-foreground pl-1">
-                            <li className="flex items-start gap-2">
-                              <span className="text-purple-500 mt-0.5 font-medium">
-                                •
-                              </span>
-                              <span>Not controlled by any one company</span>
-                            </li>
-                            <li className="flex items-start gap-2">
-                              <span className="text-purple-500 mt-0.5 font-medium">
-                                •
-                              </span>
-                              <span>Can't be changed or erased</span>
-                            </li>
-                            <li className="flex items-start gap-2">
-                              <span className="text-purple-500 mt-0.5 font-medium">
-                                •
-                              </span>
-                              <span>Your information stays protected</span>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-
-                      {/* Subtle Hint */}
-                      <div className="p-3 bg-gradient-to-r from-amber-50/50 to-orange-50/50 border border-amber-200 rounded-lg">
-                        <p className="text-xs text-center text-amber-800/90">
-                          <span className="font-medium">
-                            A little something extra:
-                          </span>{" "}
-                          Your NFT holds a surprise worth 100,000 VND inside.
+                        <p className="text-gray-600">
+                          Here's a little treat from Phúc Long—enjoy!
                         </p>
                       </div>
 
-                      {/* Mint Button */}
-                      <Button
-                        disabled={isLoading}
-                        className="w-full bg-gradient-to-r from-[#9470DC] to-[#7d5fc4] hover:from-[#8060d0] hover:to-[#6d4fb8] text-white py-5 text-base shadow-md flex items-center justify-center gap-2"
-                        onClick={() => {
-                          // TODO: Implement NFT minting with optional wish hash
-                          console.log(
-                            "Mint NFT with optional wish:",
-                            feedback || "No wish provided"
-                          );
-                        }}
-                      >
-                        <svg
-                          className="w-5 h-5"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="1.7"
-                          viewBox="0 0 24 24"
+                      {/* Gift box */}
+                      <div className="flex flex-col items-center gap-4">
+                        <motion.button
+                          onClick={() => setGiftBoxOpened(true)}
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.95 }}
+                          className="cursor-pointer focus:outline-none"
                         >
-                          <path
-                            d="M9 5l7 7-7 7"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                        {isLoading ? "Creating Your NFT..." : "Create My NFT"}
-                      </Button>
-
-                      <p className="text-xs text-center text-muted-foreground">
-                        Whether you add a personal note or not, this NFT is
-                        yours to keep
-                      </p>
-                    </>
-                  ) : (
-                    <div className="text-center py-6 space-y-5">
-                      <motion.div
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ type: "spring" }}
-                      >
-                        <div className="w-14 h-14 rounded-full bg-gradient-to-br from-green-400 to-green-500 flex items-center justify-center mx-auto shadow-lg">
-                          <svg
-                            className="w-7 h-7 text-white"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
+                          <motion.div
+                            animate={{
+                              y: [0, -10, 0],
+                              rotateZ: [0, 2, -2, 0],
+                            }}
+                            transition={{
+                              duration: 2.5,
+                              repeat: Infinity,
+                              ease: "easeInOut",
+                            }}
+                            className="text-8xl"
                           >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2.5}
-                              d="M5 13l4 4L19 7"
-                            />
-                          </svg>
-                        </div>
-                      </motion.div>
-                      <div className="space-y-2">
-                        <h3 className="text-xl font-semibold text-foreground">
-                          Your NFT is Ready
-                        </h3>
-                        <p className="text-sm text-muted-foreground max-w-md mx-auto leading-relaxed">
-                          This moment now lives on the blockchain—a permanent
-                          keepsake of today's celebration.
-                        </p>
-                      </div>
+                            🎁
+                          </motion.div>
+                        </motion.button>
 
-                      {/* Show Phuc Long code after minting */}
-                      <div className="bg-gradient-to-br from-amber-50/80 to-orange-50/80 border border-amber-200 rounded-lg p-5 space-y-3 max-w-md mx-auto">
-                        <div className="text-center space-y-1">
-                          <div className="flex items-center justify-center gap-2 mb-1">
-                            <svg
-                              className="w-4 h-4 text-amber-600"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"
-                              />
-                            </svg>
-                            <p className="text-xs font-medium text-amber-700">
-                              Your Hidden Gift
-                            </p>
-                          </div>
-                          <h4 className="text-lg font-semibold text-amber-900">
-                            Phúc Long Coffee
-                          </h4>
-                          <p className="text-xs text-amber-700">100,000 VND</p>
-                        </div>
-                        <div className="flex items-center gap-2 p-3 bg-white rounded-lg border border-amber-300">
-                          <code className="flex-1 font-mono text-base font-bold text-center text-amber-900">
-                            {redemption?.phuc_long_code || "Loading..."}
-                          </code>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={handleCopyCode}
-                            className="border-[#9470DC]/40 hover:bg-[#9470DC]/10"
-                          >
-                            <svg
-                              className="w-3.5 h-3.5 text-[#9470DC]"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <rect
-                                x="9"
-                                y="9"
-                                width="13"
-                                height="13"
-                                rx="2"
-                                strokeWidth="1.5"
-                              />
-                              <rect
-                                x="3"
-                                y="3"
-                                width="13"
-                                height="13"
-                                rx="2"
-                                strokeWidth="1.5"
-                              />
-                            </svg>
-                          </Button>
-                        </div>
-                        <p className="text-xs text-center text-amber-700">
-                          Enjoy a moment of calm with your favorite coffee.
+                        <p className="text-sm text-purple-600 font-medium animate-pulse">
+                          Tap to open
                         </p>
                       </div>
                     </div>
+                  ) : (
+                    <>
+                      {/* Sparkles animation */}
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: [0, 1, 0] }}
+                        transition={{ duration: 1.5 }}
+                        className="absolute inset-0 pointer-events-none"
+                      >
+                        {[...Array(12)].map((_, i) => (
+                          <motion.div
+                            key={i}
+                            initial={{
+                              x: "50%",
+                              y: "50%",
+                              scale: 0,
+                            }}
+                            animate={{
+                              x: `${50 + (Math.random() - 0.5) * 100}%`,
+                              y: `${50 + (Math.random() - 0.5) * 100}%`,
+                              scale: [0, 1, 0],
+                              opacity: [0, 1, 0],
+                            }}
+                            transition={{
+                              duration: 1,
+                              delay: i * 0.1,
+                              ease: "easeOut",
+                            }}
+                            className="absolute"
+                          >
+                            ✨
+                          </motion.div>
+                        ))}
+                      </motion.div>
+
+                      <div className="flex-1 flex flex-col items-center justify-center space-y-6 px-4 min-h-[450px]">
+                        {woman?.phuc_long_image ? (
+                          <div className="text-center space-y-6 z-10 w-full max-w-lg mx-auto">
+                            {/* Gift card image */}
+                            <div className="bg-amber-50 rounded-2xl p-6 border border-amber-200">
+                              <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl border-2 border-white shadow-md">
+                                <Image
+                                  src={woman.phuc_long_image}
+                                  alt="Phúc Long Gift Card"
+                                  fill
+                                  className="object-contain"
+                                  priority
+                                />
+                              </div>
+
+                              <div className="mt-5 flex gap-3 justify-center">
+                                <a
+                                  href={woman.phuc_long_image}
+                                  download={`phuclong-gift-card-${woman.name}.png`}
+                                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-amber-500 hover:bg-amber-600 text-white font-medium rounded-lg transition-colors"
+                                >
+                                  <svg
+                                    className="w-4 h-4"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                                    />
+                                  </svg>
+                                  Download
+                                </a>
+
+                                <button
+                                  onClick={handleCopyCode}
+                                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-lg transition-colors"
+                                >
+                                  <svg
+                                    className="w-4 h-4"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+                                    />
+                                  </svg>
+                                  {copiedCode ? "Copied!" : "Copy"}
+                                </button>
+                              </div>
+                            </div>
+
+                            {/* Instructions */}
+                            <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 text-left">
+                              <p className="text-sm text-blue-900">
+                                <strong>How to use:</strong> Save or screenshot
+                                this card, then show it at any Phúc Long store
+                                to redeem. Enjoy! 🫰
+                              </p>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="text-center py-12">
+                            <p className="text-gray-500">
+                              Gift card coming soon! ✨
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    </>
                   )}
                 </CardContent>
               </Card>
@@ -860,36 +902,105 @@ export default function RedemptionCard({
                   </div>
 
                   {/* Feedback Form */}
-                  <div className="space-y-4">
-                    <div className="space-y-2">
-                      <Label
-                        htmlFor="feedback"
-                        className="text-lg text-foreground"
-                      >
-                        Share Your Thoughts (Optional)
-                      </Label>
+                  <div className="space-y-6">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Share your thoughts (optional)
+                      </label>
                       <Textarea
-                        id="feedback"
-                        placeholder="Tell us what you think, or share any suggestions..."
                         value={feedback}
                         onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
                           setFeedback(e.target.value)
                         }
-                        className="min-h-[120px] bg-white resize-none border-[#9470DC]/30 focus:border-[#9470DC] focus:ring-[#9470DC]"
+                        onClick={(e) => e.stopPropagation()}
+                        placeholder="How do you feel? Do you have any feedback? We'd love to know..."
+                        className="w-full bg-white px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[#9470DC] focus:ring-2 focus:ring-[#9470DC]/20 outline-none transition-all resize-none"
+                        rows={4}
                       />
                     </div>
 
-                    <Button
+                    <div className="text-center space-y-4 relative">
+                      <p className="text-sm text-gray-600">
+                        Show some love to Hoasen with your reactions!
+                      </p>
+
+                      <div className="flex justify-center gap-3">
+                        {[
+                          {
+                            icon: "💜",
+                            color: "from-purple-400 to-purple-600",
+                          },
+                          {
+                            icon: "😊",
+                            color: "from-yellow-400 to-orange-500",
+                          },
+                          {
+                            icon: "⭐",
+                            color: "from-yellow-300 to-yellow-500",
+                          },
+                          { icon: "👍", color: "from-blue-400 to-blue-600" },
+                          {
+                            icon: "🪷",
+                            color: "from-pink-300 to-pink-500",
+                          },
+                        ].map((reaction, index) => (
+                          <motion.button
+                            key={index}
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
+                            onClick={handleHeartClick}
+                            className={`w-14 h-14 rounded-full bg-gradient-to-br ${reaction.color} flex items-center justify-center text-2xl shadow-lg hover:shadow-xl transition-all`}
+                          >
+                            {reaction.icon}
+                          </motion.button>
+                        ))}
+                      </div>
+
+                      {heartCount > 0 && (
+                        <motion.p
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          className="text-sm text-[#9470DC] font-medium"
+                        >
+                          {heartCount} reactions sent! Keep going! 🎉
+                        </motion.p>
+                      )}
+
+                      {/* Floating Hearts Animation */}
+                      <AnimatePresence>
+                        {floatingHearts.map((heart) => (
+                          <motion.div
+                            key={heart.id}
+                            initial={{ opacity: 1, y: 0, x: heart.x }}
+                            animate={{
+                              opacity: 0,
+                              y: -200,
+                              x: heart.x + (Math.random() - 0.5) * 100,
+                            }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 2, ease: "easeOut" }}
+                            className="absolute pointer-events-none text-4xl"
+                            style={{ bottom: 100, left: "50%" }}
+                          >
+                            💜
+                          </motion.div>
+                        ))}
+                      </AnimatePresence>
+                    </div>
+
+                    <button
                       onClick={handleSubmitFeedback}
-                      disabled={!feedback.trim()}
-                      className="w-full bg-[#9470DC] hover:bg-[#7d5fc4] text-white py-6 text-lg"
+                      disabled={isSubmittingFeedback}
+                      className="w-full py-3 bg-gradient-to-r from-[#9470DC] to-purple-600 text-white rounded-xl font-medium hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      Submit Feedback
-                    </Button>
+                      {isSubmittingFeedback
+                        ? "Sending..."
+                        : "Send Your Message"}
+                    </button>
                   </div>
 
-                  {/* Heart Spam Section */}
-                  <div className="pt-6 border-t-2 border-white/30">
+                  {/* Legacy Heart Spam Section - Keep for backward compatibility */}
+                  <div className="pt-6 border-t-2 border-white/30 hidden">
                     <div className="text-center space-y-4">
                       <div className="space-y-2">
                         <h3 className="text-xl font-semibold text-foreground">
