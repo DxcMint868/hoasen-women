@@ -342,7 +342,7 @@ export default function RedemptionCard({
               </Card>
             )}
 
-            {/* Page 2: USDT Gift */}
+            {/* Page 2: USDC Gift */}
             {currentPage === 2 && (
               <Card className="relative border-2 border-white/50 backdrop-blur-sm overflow-visible min-h-[600px]">
                 <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/95 to-white pointer-events-none rounded-lg" />
@@ -377,9 +377,9 @@ export default function RedemptionCard({
                   <CardTitle className="text-3xl text-foreground">
                     LUCKY MONEY -{" "}
                     <KnowledgeTooltip
-                      term="USDT"
-                      definition="USDT (Tether) is a stablecoin cryptocurrency pegged to the US Dollar. Each USDT token is worth approximately $1 USD, making it stable and predictable unlike Bitcoin or Ethereum."
-                      example="Your 12 USDT = approximately $12 USD that you can use, trade, or convert to regular money anytime."
+                      term="USDC"
+                      definition="USDC (USD Coin) is a stablecoin cryptocurrency pegged to the US Dollar. Each USDC token is worth approximately $1 USD, making it stable and predictable unlike Bitcoin or Ethereum."
+                      example="Your 12 USDC = approximately $12 USD that you can use, trade, or convert to regular money anytime."
                     />{" "}
                     GIFT
                   </CardTitle>
@@ -389,13 +389,13 @@ export default function RedemptionCard({
                     <KnowledgeTooltip
                       term="stablecoin"
                       definition="A cryptocurrency designed to maintain a stable value by being pegged to a real-world asset like the US Dollar. Unlike Bitcoin or Ethereum that go up and down, stablecoins stay at a consistent price."
-                      example="1 USDT always equals $1 USD in real life, making it perfect for everyday transactions without worrying about price changes."
+                      example="1 USDC always equals $1 USD in real life, making it perfect for everyday transactions without worrying about price changes."
                     />{" "}
                     tokens that live on the{" "}
                     <KnowledgeTooltip
                       term="blockchain"
                       definition="A digital ledger that records transactions across many computers. Think of it like a shared Google Doc that everyone can see, but no one can secretly change or delete."
-                      example="When you receive USDT, it's recorded on the blockchain, and everyone can verify you own it—but only you can spend it with your wallet."
+                      example="When you receive USDC, it's recorded on the blockchain, and everyone can verify you own it—but only you can spend it with your wallet."
                     />
                     .
                   </CardDescription>
@@ -410,7 +410,7 @@ export default function RedemptionCard({
                           <KnowledgeTooltip
                             term="Web3"
                             definition="The next generation of the internet where you own your digital assets directly, without relying on banks or companies to hold them for you. It's powered by blockchain technology."
-                            example="Instead of PayPal holding your money, with Web3 you hold your own USDT in your personal wallet—like carrying cash, but digital and global."
+                            example="Instead of PayPal holding your money, with Web3 you hold your own USDC in your personal wallet—like carrying cash, but digital and global."
                           />
                           ? Here's how to get started:
                         </h3>
@@ -470,7 +470,7 @@ export default function RedemptionCard({
                             >
                               <circle cx="4" cy="4" r="3" strokeWidth="1.2" />
                             </svg>
-                            Paste it below to receive your USDT gift
+                            Paste it below to receive your USDC gift
                           </li>
                         </ul>
                       </div>
@@ -556,9 +556,9 @@ export default function RedemptionCard({
                                   <p className="text-sm font-semibold text-green-900">
                                     Success! 12{" "}
                                     <KnowledgeTooltip
-                                      term="USDT"
-                                      definition="USDT (Tether) is a stablecoin cryptocurrency pegged to the US Dollar. Each USDT token is worth approximately $1 USD, making it stable and predictable unlike Bitcoin or Ethereum."
-                                      example="Your 12 USDT = approximately $12 USD that you can use, trade, or convert to regular money anytime."
+                                      term="USDC"
+                                      definition="USDC (USD Coin) is a stablecoin cryptocurrency pegged to the US Dollar. Each USDC token is worth approximately $1 USD, making it stable and predictable unlike Bitcoin or Ethereum."
+                                      example="Your 12 USDC = approximately $12 USD that you can use, trade, or convert to regular money anytime."
                                     />{" "}
                                     sent to your wallet
                                   </p>
@@ -594,7 +594,7 @@ export default function RedemptionCard({
                             {/* Instructions for checking balance */}
                             <div className="p-4 bg-purple-50 border border-purple-200 rounded-lg space-y-3">
                               <h4 className="text-sm font-semibold text-purple-900">
-                                How to check your USDT balance:
+                                How to check your USDC balance:
                               </h4>
                               <ol className="space-y-2 text-xs text-purple-800">
                                 <li className="flex items-start gap-2">
@@ -612,19 +612,19 @@ export default function RedemptionCard({
                                   <span className="font-bold">3.</span>
                                   <span>
                                     Click on 'Tokens' tab and scroll down to see
-                                    your USDT token balance (wait few minutes)
+                                    your USDC token balance (wait few minutes)
                                   </span>
                                 </li>
                                 <li className="flex items-start gap-2">
                                   <span className="font-bold">4.</span>
                                   <span>
-                                    If you don't see USDT, tap "Import tokens"
-                                    and search for USDT on Base network
+                                    If you don't see USDC, tap "Import tokens"
+                                    and search for USDC on Base network
                                   </span>
                                 </li>
                                 <li>
                                   <span className="italic mt-4">
-                                    If you still don't see USDT, contact
+                                    If you still don't see USDC, contact
                                     support: minh@hoasen.io (or Slack)
                                   </span>
                                 </li>
@@ -646,7 +646,7 @@ export default function RedemptionCard({
                             ? "Processing..."
                             : claimStatus === "success"
                             ? "Claimed!"
-                            : "Claim USDT Reward"}
+                            : "Claim USDC Reward"}
                         </Button>
                       </form>
                     </>
@@ -654,7 +654,7 @@ export default function RedemptionCard({
                     <div className="text-center py-8 space-y-4">
                       {/* Check icon already replaced above with SVG */}
                       <h3 className="text-2xl font-semibold text-green-900">
-                        USDT Claimed!
+                        USDC Claimed!
                       </h3>
                       <p className="text-green-700">
                         Your reward has been sent to your wallet.
