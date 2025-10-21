@@ -16,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import AffirmationsPage from "./affirmations-page";
 
 interface Woman {
   id: string;
@@ -55,7 +56,7 @@ export default function RedemptionCard({
   >([]);
   const [heartCount, setHeartCount] = useState(0);
 
-  const totalPages = 4;
+  const totalPages = 5;
 
   const handleCopyCode = () => {
     if (redemption?.phuc_long_code) {
@@ -188,8 +189,18 @@ export default function RedemptionCard({
               opacity: { duration: 0.2 },
             }}
           >
-            {/* Page 1: Tribute & Welcome */}
+            {/* Page 0: Affirmations */}
             {currentPage === 0 && (
+              <Card className="relative border-2 border-white/50 shadow-2xl backdrop-blur-sm overflow-hidden min-h-[600px]">
+                <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/95 to-white pointer-events-none" />
+                <CardContent className="relative p-8 sm:p-12">
+                  <AffirmationsPage womanId={woman.id} />
+                </CardContent>
+              </Card>
+            )}
+
+            {/* Page 1: Tribute & Welcome */}
+            {currentPage === 1 && (
               <Card className="relative border-2 border-white/50 shadow-2xl backdrop-blur-sm overflow-hidden min-h-[600px]">
                 <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/95 to-white pointer-events-none" />
                 <CardContent className="relative p-8 sm:p-12">
@@ -281,7 +292,7 @@ export default function RedemptionCard({
             )}
 
             {/* Page 2: USDT Gift */}
-            {currentPage === 1 && (
+            {currentPage === 2 && (
               <Card className="relative border-2 border-white/50 shadow-2xl backdrop-blur-sm overflow-hidden min-h-[600px]">
                 <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/95 to-white pointer-events-none" />
                 <CardHeader className="relative text-center pb-4">
@@ -442,7 +453,7 @@ export default function RedemptionCard({
             )}
 
             {/* Page 3: NFT Mint with Optional Wish */}
-            {currentPage === 2 && (
+            {currentPage === 3 && (
               <Card className="relative border-2 border-white/50 shadow-2xl backdrop-blur-sm overflow-hidden min-h-[600px]">
                 <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/95 to-white pointer-events-none" />
 
@@ -774,7 +785,7 @@ export default function RedemptionCard({
             )}
 
             {/* Page 4: Feedback & Hearts */}
-            {currentPage === 3 && (
+            {currentPage === 4 && (
               <Card className="relative border-2 border-white/50 shadow-2xl backdrop-blur-sm overflow-hidden min-h-[600px]">
                 <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/95 to-white pointer-events-none" />
 

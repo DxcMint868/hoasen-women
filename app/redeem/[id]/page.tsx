@@ -7,15 +7,16 @@ import SiteFooter from "@/components/site-footer";
 export default async function RedemptionPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
+  const { id } = await params;
   const supabase = await createClient();
 
   // Fetch woman profile
   const { data: woman, error: womanError } = await supabase
     .from("women_profiles")
     .select("*")
-    .eq("id", params.id)
+    .eq("id", id)
     .single();
 
   if (womanError || !woman) {
@@ -26,14 +27,14 @@ export default async function RedemptionPage({
   const { data: redemption } = await supabase
     .from("redemptions")
     .select("*")
-    .eq("woman_id", params.id)
+    .eq("woman_id", id)
     .single();
 
   // Fetch personal message
   const { data: messages } = await supabase
     .from("messages")
     .select("content")
-    .eq("woman_id", params.id)
+    .eq("woman_id", id)
     .eq("message_type", "personal")
     .limit(1);
 

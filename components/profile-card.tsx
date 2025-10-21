@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import AffirmationModal from "./affirmation-modal";
 
 interface Woman {
   id: string;
@@ -47,6 +48,7 @@ export default function ProfileCard({
   onClick: () => void;
 }) {
   const [isHovered, setIsHovered] = useState(false);
+  const [showAffirmationModal, setShowAffirmationModal] = useState(false);
   const personalization = personalizations[woman.name];
   // Render floating elements based on personalization
   const renderFloatingElements = () => {
@@ -206,8 +208,32 @@ export default function ProfileCard({
               </p>
             )}
           </div>
+
+          {/* Affirmation Button - Show on Hover */}
+          {isHovered && (
+            <motion.button
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10 }}
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowAffirmationModal(true);
+              }}
+              className="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 bg-[#F8BBD0]/80 hover:bg-[#F8BBD0] text-[#9470DC] font-medium text-sm rounded-full transition-all shadow-md hover:shadow-lg"
+            >
+              💝 Send Affirmation
+            </motion.button>
+          )}
         </div>
       </div>
+
+      {/* Affirmation Modal */}
+      <AffirmationModal
+        womanId={woman.id}
+        womanName={woman.name}
+        isOpen={showAffirmationModal}
+        onClose={() => setShowAffirmationModal(false)}
+      />
     </motion.div>
   );
 }
