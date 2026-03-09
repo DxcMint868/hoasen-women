@@ -15,6 +15,9 @@ const meetingTypes = [
   "Code review",
   "Design critique",
   "Lunch break (optional)",
+  "IWD celebration 🌟",
+  "Women crush Wednesday",
+  "Team appreciation session",
 ];
 
 export default function AnimatedMeetingHeadline() {
@@ -27,7 +30,7 @@ export default function AnimatedMeetingHeadline() {
   }, []);
   return (
     <div className="mt-2 text-base font-semibold flex items-center justify-center gap-2">
-      <span className="px-2 py-1 rounded text-[#FFD54F] bg-[#fff]/20 transition-all duration-300" style={{minWidth:120, display:'inline-block'}}>
+      <span className="px-2 py-1 rounded text-[#F5C842] bg-[#fff]/20 transition-all duration-300" style={{minWidth:120, display:'inline-block'}}>
         {meetingTypes[idx]}
       </span>
       <span className="text-white/80">in 5 minutes</span>

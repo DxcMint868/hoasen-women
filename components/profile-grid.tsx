@@ -3,8 +3,6 @@
 import { useState } from "react";
 import ProfileCard from "./profile-card";
 import PasswordModal from "./password-modal";
-import FlipCard from "./men-card";
-import NotListedWomanCard from "./not-listed-woman-card";
 
 interface Woman {
   id: string;
@@ -31,21 +29,6 @@ export default function ProfileGrid({ women }: { women: Woman[] }) {
             onClick={() => handleCardClick(woman)}
           />
         ))}
-        {/* Funny MenCard at the end */}
-        <div>
-          <FlipCard
-            frontText="For Hoasen men"
-            backText="Sorry, this card is for decoration only. Try again on International Men's Day!"
-          />
-        </div>
-        {/* Not Listed Woman Card at the end */}
-        <div>
-          <NotListedWomanCard />
-          {/* <FlipCard
-            frontText="Not listed?"
-            backText="Become a part of hoasen! "
-          /> */}
-        </div>
       </div>
 
       {selectedWoman && (

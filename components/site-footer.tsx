@@ -23,6 +23,10 @@ const funnyBubbles = [
   "Warning: May contain traces of cá khô",
   "If you’re hungry, ask Nhu",
   "Meg’s design, Hao’s bugs, Nhu’s food. What a team!",
+  "Happy International Women’s Day! 💜",
+  "March 8 — every year, every time",
+  "Trang already has a plan for this",
+  "Mink made it look good. Obviously.",
   "Refresh for more fun!",
 ];
 
@@ -36,16 +40,16 @@ export default function SiteFooter() {
   }, []);
 
   return (
-    <footer className="border-t border-white/20 bg-[#9470DC]/80 backdrop-blur-sm mt-24 relative">
+    <footer className="border-t border-white/20 bg-[#6B3FA0]/80 backdrop-blur-sm mt-24 relative">
       {/* Floating funny bubble */}
       <div className="absolute left-1/2 -translate-x-1/2 -top-8 z-10">
-        <div className="bg-white/90 text-[#9470DC] px-5 py-2 rounded-full shadow-lg border border-[#9470DC]/30 text-sm font-semibold animate-bounce select-none">
+        <div className="bg-white/90 text-[#6B3FA0] px-5 py-2 rounded-full shadow-lg border border-[#6B3FA0]/30 text-sm font-semibold animate-bounce select-none">
           {bubble}
         </div>
       </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center flex flex-col items-center gap-3">
         <p className="text-sm text-white/80">
-          Made with <b>love</b> in heart, <b>skills</b> in hand, and <b>creativity</b> in mind (❌ <b>money</b> in pocket) • October 20, 2024
+          Hoasen · 2026
         </p>
         <a
           href="https://github.com/DxcMint868/hoasen-women"

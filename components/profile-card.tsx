@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import AffirmationModal from "./affirmation-modal";
 
 interface Woman {
   id: string;
@@ -38,6 +37,18 @@ const personalizations: Record<
       "The Cá Khô Queen. Her dried fish made it all the way to Bangkok in Meg's suitcase.",
     hoverEffect: "treats",
   },
+  "Trang Nguyen": {
+    title: "Project Manager",
+    description:
+      "Moved an entire office in her first week. Maps chaos, connects dots, speaks Czech, German, English & Vietnamese — probably thinks in all four at once.",
+    hoverEffect: "treats",
+  },
+  "Mink Chanakan": {
+    title: "Marketing Specialist",
+    description:
+      "Queen of content who turns ideas into campaigns and every campaign into a story worth remembering. Creative, sharp, and always three steps ahead.",
+    hoverEffect: "cats",
+  }
 };
 
 export default function ProfileCard({
@@ -48,7 +59,6 @@ export default function ProfileCard({
   onClick: () => void;
 }) {
   const [isHovered, setIsHovered] = useState(false);
-  const [showAffirmationModal, setShowAffirmationModal] = useState(false);
   const personalization = personalizations[woman.name];
   // Render floating elements based on personalization
   const renderFloatingElements = () => {
@@ -75,7 +85,7 @@ export default function ProfileCard({
             }}
           >
             <span className="text-2xl">🐱</span>
-          </motion.div>
+          </motion.div>,
         );
       }
       // Add a dog too
@@ -95,7 +105,7 @@ export default function ProfileCard({
           }}
         >
           <span className="text-2xl">🐶</span>
-        </motion.div>
+        </motion.div>,
       );
     } else if (personalization.hoverEffect === "bugs") {
       // Bugs scurrying around
@@ -116,12 +126,12 @@ export default function ProfileCard({
             }}
           >
             <span className="text-xl">🐛</span>
-          </motion.div>
+          </motion.div>,
         );
       }
     } else if (personalization.hoverEffect === "treats") {
       // Sweet treats floating around
-      const treats = ["🍰", "🧋", "🍩", "🍪", "🍨"];
+    const treats = ["✨", "💛", "🌟", "⭐", "🏆"];
       for (let i = 0; i < 5; i++) {
         elements.push(
           <motion.div
@@ -144,7 +154,7 @@ export default function ProfileCard({
             }}
           >
             <span className="text-2xl">{treats[i]}</span>
-          </motion.div>
+          </motion.div>,
         );
       }
     }
@@ -161,79 +171,94 @@ export default function ProfileCard({
       onMouseLeave={() => setIsHovered(false)}
       className="cursor-pointer group"
     >
-      <div className="relative rounded-2xl overflow-hidden border-2 border-white/50 hover:border-white/70 transition-all duration-500 shadow-lg hover:shadow-2xl backdrop-blur-md">
+      <div
+        className="relative rounded-2xl overflow-hidden transition-all duration-500"
+        style={{
+          background: "linear-gradient(160deg, #2d1b4e 0%, #1a0a30 100%)",
+          border: "1px solid rgba(245,200,66,0.25)",
+          boxShadow: isHovered
+            ? "0 20px 60px rgba(74,29,140,0.5), 0 0 0 1px rgba(245,200,66,0.4)"
+            : "0 8px 32px rgba(74,29,140,0.3), 0 0 0 1px rgba(245,200,66,0.15)",
+        }}
+      >
+        {/* Gold noise texture */}
+        <div className="absolute inset-0 pointer-events-none"
+          style={{ backgroundImage: "url(/textures/gold-noise.png)", backgroundSize: "180px", opacity: 0.05, mixBlendMode: "screen" }} />
+
+        {/* Top gold accent line */}
+        <div className="absolute top-0 left-0 right-0 h-px"
+          style={{ background: "linear-gradient(90deg, transparent, rgba(245,200,66,0.6), transparent)" }} />
+
         {/* Floating elements */}
         {renderFloatingElements()}
-        {/* Smooth gradient overlay across entire card */}
-        <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/95 to-white pointer-events-none" />
 
-        {/* Content with relative positioning */}
         <div className="relative">
-          {/* Image Container */}
-          <div className="relative aspect-square bg-gradient-to-br from-white/10 to-white/5 overflow-hidden p-4">
-            {/* Outer frame effect */}
-            <div className="absolute inset-4 border-2 border-white/30 rounded-xl pointer-events-none" />
-
-            {/* Photo */}
-            <div className="relative h-full rounded-lg overflow-hidden">
+          {/* Image container */}
+          <div className="relative aspect-square overflow-hidden p-3">
+            <div className="absolute inset-3 rounded-xl pointer-events-none z-10"
+              style={{ border: "1px solid rgba(245,200,66,0.2)" }} />
+            <div className="relative h-full rounded-xl overflow-hidden">
               <Image
                 src={woman.slack_pfp_url || "/placeholder.svg"}
                 alt={woman.name}
                 fill
-                className="object-cover group-hover:scale-103 transition-transform duration-700 ease-out"
+                className="object-cover transition-transform duration-700 ease-out"
+                style={{ transform: isHovered ? "scale(1.04)" : "scale(1)" }}
               />
-              {/* Soft overlay on hover */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div
+                className="absolute inset-0 transition-opacity duration-500"
+                style={{
+                  background: "linear-gradient(to top, rgba(26,10,48,0.5) 0%, transparent 60%)",
+                  opacity: isHovered ? 1 : 0.4,
+                }}
+              />
             </div>
           </div>
 
-          {/* Content - text section */}
-          <div className="px-6 py-5 text-center border-t-2 border-white/30">
-            <h3 className="text-lg font-medium text-foreground mb-1 tracking-wide">
+          {/* Text section */}
+          <div className="px-5 py-4 text-center"
+            style={{ borderTop: "1px solid rgba(245,200,66,0.12)" }}>
+            <h3 className="text-base font-semibold mb-0.5 tracking-wide" style={{ color: "#FFE680" }}>
               {woman.name}
             </h3>
-            {personalization && (
+            {personalization ? (
               <>
-                <p className="text-sm text-muted-foreground font-medium mb-1">
+                <p className="text-xs font-medium mb-2" style={{ color: "rgba(245,200,66,0.7)", letterSpacing: "0.06em" }}>
                   {personalization.title}
                 </p>
-                <p className="text-xs text-muted-foreground/80 font-light italic leading-relaxed">
+                <p className="text-xs font-light italic leading-relaxed" style={{ color: "rgba(255,255,255,0.55)" }}>
                   {personalization.description}
                 </p>
               </>
-            )}
-            {!personalization && (
-              <p className="text-xs text-muted-foreground font-light tracking-widest uppercase">
+            ) : (
+              <p className="text-xs font-light tracking-widest uppercase" style={{ color: "rgba(245,200,66,0.45)" }}>
                 Click to reveal
               </p>
             )}
           </div>
 
-          {/* Affirmation Button - Show on Hover */}
+          {/* Hover CTA */}
           {isHovered && (
-            <motion.button
-              initial={{ opacity: 0, y: 10 }}
+            <motion.div
+              initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 10 }}
-              onClick={(e) => {
-                e.stopPropagation();
-                setShowAffirmationModal(true);
-              }}
-              className="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 bg-[#F8BBD0]/80 hover:bg-[#F8BBD0] text-[#9470DC] font-medium text-sm rounded-full transition-all shadow-md hover:shadow-lg"
+              className="px-5 pb-4 flex justify-center"
             >
-              💝 Send Affirmation
-            </motion.button>
+              <div
+                className="px-4 py-1.5 rounded-full text-xs font-medium tracking-widest uppercase"
+                style={{
+                  background: "linear-gradient(135deg, rgba(245,200,66,0.15), rgba(245,200,66,0.08))",
+                  border: "1px solid rgba(245,200,66,0.3)",
+                  color: "#F5C842",
+                  letterSpacing: "0.1em",
+                }}
+              >
+                Open gift
+              </div>
+            </motion.div>
           )}
         </div>
       </div>
-
-      {/* Affirmation Modal */}
-      <AffirmationModal
-        womanId={woman.id}
-        womanName={woman.name}
-        isOpen={showAffirmationModal}
-        onClose={() => setShowAffirmationModal(false)}
-      />
     </motion.div>
   );
 }

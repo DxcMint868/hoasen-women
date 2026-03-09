@@ -11,8 +11,8 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Pastel purple theme with colorful touches */
-  --background: #9470DC;
+  /* IWD theme: bold purple + white + gold */
+  --background: #6B3FA0;
   --foreground: #2d1b4e;
   --card: #ffffff;
   --card-foreground: #2d1b4e;
@@ -20,31 +20,31 @@
   --popover-foreground: #2d1b4e;
   --primary: #d4a5f5;
   --primary-foreground: #2d1b4e;
-  --secondary: #FFB6D9;
+  --secondary: #F5C842;
   --secondary-foreground: #2d1b4e;
-  --muted: #e8dcd5;
+  --muted: #ede8f7;
   --muted-foreground: #5a3d7a;
-  --accent: #A8D8EA;
+  --accent: #F5C842;
   --accent-foreground: #2d1b4e;
   --destructive: #ef4444;
   --destructive-foreground: #ffffff;
   --border: #d4a5f5;
   --input: #ffffff;
-  --ring: #d4a5f5;
+  --ring: #F5C842;
   --chart-1: #d4a5f5;
-  --chart-2: #FFB6D9;
-  --chart-3: #A8D8EA;
-  --chart-4: #FFFACD;
-  --chart-5: #B5EAD7;
+  --chart-2: #F5C842;
+  --chart-3: #ffffff;
+  --chart-4: #FFE680;
+  --chart-5: #B89AE0;
   --radius: 1.5rem;
-  --sidebar: #9470DC;
+  --sidebar: #6B3FA0;
   --sidebar-foreground: #ffffff;
   --sidebar-primary: #d4a5f5;
   --sidebar-primary-foreground: #2d1b4e;
-  --sidebar-accent: #FFB6D9;
+  --sidebar-accent: #F5C842;
   --sidebar-accent-foreground: #2d1b4e;
   --sidebar-border: #d4a5f5;
-  --sidebar-ring: #d4a5f5;
+  --sidebar-ring: #F5C842;
 }
 
 .dark {
@@ -129,13 +129,13 @@
   }
 
   body {
-    /* Pastel purple base with subtle colorful touches */
-    background-color: #9470DC;
+    /* IWD bold purple base with gold and white orbs */
+    background-color: #6B3FA0;
     background-image: 
-      /* Subtle pastel color orbs floating in the background */
-      url("data:image/svg+xml,%3Csvg viewBox='0 0 1400 900' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3CradialGradient id='pastelPink' cx='50%25' cy='50%25'%3E%3Cstop offset='0%25' style='stop-color:%23FFB6D9;stop-opacity:0.15' /%3E%3Cstop offset='70%25' style='stop-color:%23FFB6D9;stop-opacity:0.05' /%3E%3Cstop offset='100%25' style='stop-color:%239470DC;stop-opacity:0' /%3E%3C/radialGradient%3E%3CradialGradient id='pastelBlue' cx='50%25' cy='50%25'%3E%3Cstop offset='0%25' style='stop-color:%23A8D8EA;stop-opacity:0.15' /%3E%3Cstop offset='70%25' style='stop-color:%23A8D8EA;stop-opacity:0.05' /%3E%3Cstop offset='100%25' style='stop-color:%239470DC;stop-opacity:0' /%3E%3C/radialGradient%3E%3CradialGradient id='pastelYellow' cx='50%25' cy='50%25'%3E%3Cstop offset='0%25' style='stop-color:%23FFFACD;stop-opacity:0.12' /%3E%3Cstop offset='70%25' style='stop-color:%23FFFACD;stop-opacity:0.04' /%3E%3Cstop offset='100%25' style='stop-color:%239470DC;stop-opacity:0' /%3E%3C/radialGradient%3E%3CradialGradient id='pastelMint' cx='50%25' cy='50%25'%3E%3Cstop offset='0%25' style='stop-color:%23B5EAD7;stop-opacity:0.12' /%3E%3Cstop offset='70%25' style='stop-color:%23B5EAD7;stop-opacity:0.04' /%3E%3Cstop offset='100%25' style='stop-color:%239470DC;stop-opacity:0' /%3E%3C/radialGradient%3E%3C/defs%3E%3Ccircle cx='200' cy='150' r='200' fill='url(%23pastelPink)' /%3E%3Ccircle cx='1100' cy='700' r='250' fill='url(%23pastelBlue)' /%3E%3Ccircle cx='800' cy='300' r='180' fill='url(%23pastelYellow)' /%3E%3Ccircle cx='300' cy='650' r='160' fill='url(%23pastelMint)' /%3E%3C/svg%3E"),
-      /* Cute sparkle dots in pastel colors */
-      url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='20' cy='20' r='2' fill='%23FFB6D9' opacity='0.2'/%3E%3Ccircle cx='60' cy='40' r='1.5' fill='%23A8D8EA' opacity='0.15'/%3E%3Ccircle cx='45' cy='75' r='2.5' fill='%23FFFACD' opacity='0.18'/%3E%3Ccircle cx='85' cy='15' r='1.8' fill='%23B5EAD7' opacity='0.15'/%3E%3Ccircle cx='30' cy='90' r='1.2' fill='%23FFB6D9' opacity='0.12'/%3E%3Ccircle cx='70' cy='70' r='1.5' fill='%23A8D8EA' opacity='0.1'/%3E%3C/svg%3E");
+      /* Gold and white orbs floating in the background */
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 1400 900' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3CradialGradient id='gold1' cx='50%25' cy='50%25'%3E%3Cstop offset='0%25' style='stop-color:%23F5C842;stop-opacity:0.18' /%3E%3Cstop offset='70%25' style='stop-color:%23F5C842;stop-opacity:0.06' /%3E%3Cstop offset='100%25' style='stop-color:%236B3FA0;stop-opacity:0' /%3E%3C/radialGradient%3E%3CradialGradient id='white1' cx='50%25' cy='50%25'%3E%3Cstop offset='0%25' style='stop-color:%23ffffff;stop-opacity:0.12' /%3E%3Cstop offset='70%25' style='stop-color:%23ffffff;stop-opacity:0.04' /%3E%3Cstop offset='100%25' style='stop-color:%236B3FA0;stop-opacity:0' /%3E%3C/radialGradient%3E%3CradialGradient id='gold2' cx='50%25' cy='50%25'%3E%3Cstop offset='0%25' style='stop-color:%23FFE680;stop-opacity:0.14' /%3E%3Cstop offset='70%25' style='stop-color:%23FFE680;stop-opacity:0.05' /%3E%3Cstop offset='100%25' style='stop-color:%236B3FA0;stop-opacity:0' /%3E%3C/radialGradient%3E%3CradialGradient id='purple1' cx='50%25' cy='50%25'%3E%3Cstop offset='0%25' style='stop-color:%23B89AE0;stop-opacity:0.15' /%3E%3Cstop offset='70%25' style='stop-color:%23B89AE0;stop-opacity:0.05' /%3E%3Cstop offset='100%25' style='stop-color:%236B3FA0;stop-opacity:0' /%3E%3C/radialGradient%3E%3C/defs%3E%3Ccircle cx='200' cy='150' r='200' fill='url(%23gold1)' /%3E%3Ccircle cx='1100' cy='700' r='250' fill='url(%23white1)' /%3E%3Ccircle cx='800' cy='300' r='180' fill='url(%23gold2)' /%3E%3Ccircle cx='300' cy='650' r='160' fill='url(%23purple1)' /%3E%3C/svg%3E"),
+      /* Gold and white sparkle dots */
+      url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='20' cy='20' r='2' fill='%23F5C842' opacity='0.25'/%3E%3Ccircle cx='60' cy='40' r='1.5' fill='%23ffffff' opacity='0.15'/%3E%3Ccircle cx='45' cy='75' r='2.5' fill='%23FFE680' opacity='0.2'/%3E%3Ccircle cx='85' cy='15' r='1.8' fill='%23F5C842' opacity='0.18'/%3E%3Ccircle cx='30' cy='90' r='1.2' fill='%23ffffff' opacity='0.12'/%3E%3Ccircle cx='70' cy='70' r='1.5' fill='%23FFE680' opacity='0.15'/%3E%3C/svg%3E");
 
     background-attachment: fixed;
     background-size: 1400px 900px, 100px 100px;
