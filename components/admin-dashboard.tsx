@@ -72,7 +72,7 @@ export default function AdminDashboard({ women }: { women: Woman[] }) {
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-foreground">Hoasen Admin</h1>
-                <p className="text-xs text-muted-foreground">Women's Day Celebration 2024</p>
+                <p className="text-xs text-muted-foreground">Women's Day Celebration 2026</p>
               </div>
             </div>
             <Button
@@ -225,7 +225,7 @@ export default function AdminDashboard({ women }: { women: Woman[] }) {
       {/* Footer */}
       <footer className="border-t border-primary/20 bg-background/80 backdrop-blur-sm mt-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center">
-          <p className="text-sm text-muted-foreground">Hoasen Admin Dashboard • Women's Day Celebration 2024</p>
+          <p className="text-sm text-muted-foreground">Hoasen Admin Dashboard • Women's Day Celebration 2026</p>
         </div>
       </footer>
     </>

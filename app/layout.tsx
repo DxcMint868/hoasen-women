@@ -8,11 +8,11 @@ const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Hoasen Women's Day 2024 - Gift Redemption",
+  title: "Hoasen Women's Day 2026 - Gift Redemption",
   description: "Celebrate Vietnam's Women's Day with Hoasen. Redeem your special digital and physical gifts.",
   generator: "v0.app",
   openGraph: {
-    title: "Hoasen Women's Day 2024",
+    title: "Hoasen Women's Day 2026",
     description: "Celebrate Vietnam's Women's Day with Hoasen. Redeem your special digital and physical gifts.",
     type: "website",
   },
