@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 const funnyBubbles = [
-  "Found a bug? Fix it urself lol",
+  "Found a bug? Did you mean a feature?",
   "PRs welcome!",
   "This site runs on cá khô energy",
   "Design by Meg, bugs by Hao, Ca Kho by Nhu",
