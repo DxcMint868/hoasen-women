@@ -191,8 +191,7 @@ export default function PasswordModal({
           {scanStep === "password" && (
             <>
               <p className="text-sm text-muted-foreground">
-                Enter the password from your physical envelope delivered to your
-                office seat to unlock your gift.
+                Enter the password from your email to unlock your gift.
               </p>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="space-y-2">
